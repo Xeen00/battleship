@@ -2,3 +2,23 @@ body {
     background-color: powderblue;
     font-family: Arial;
 }
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.tile{
+    height: 5px;
+    width: 5px;
+    background-color: aquamarine;
+}
+
+#attack-board{
+    background-color: red;
+
+}
+
+#defense-board{
+    background-color: blue;
+}
