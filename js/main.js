@@ -1,3 +1,17 @@
+const ship = document.getElementById("ship");
+const dropzone = document.getElementById("dropzone");
+
+ship.addEventListener("dragstart", function (event){
+    console.log(event);
+})
+
+dropzone.addEventListener("dragover", function (event){
+    event.preventDefault();
+})
+
+dropzone.addEventListener("drop", function (event){
+    dropzone.appendChild(ship);
+})
 
 document.addEventListener('DOMContentLoaded', () => {
     inizializeAttackBoard();
