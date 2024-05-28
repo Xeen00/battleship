@@ -9,14 +9,18 @@ body {
 }
 
 .tile{
+    display: grid;
     height: 5px;
     width: 5px;
     background-color: aquamarine;
 }
 
+.gameboard{
+    grid-template-columns: repeat(10, 1fr);
+}
+
 #attack-board{
     background-color: red;
-
 }
 
 #defense-board{
