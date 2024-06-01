@@ -1,17 +1,32 @@
-const ship = document.getElementById("ship");
-const dropzone = document.getElementById("dropzone");
+const ships = document.getElementsByClassName("ship");
+const shipdest = document.getElementById("shipdest");
+const shipbase = document.getElementById("shipbase");
 
-ship.addEventListener("dragstart", function (event){
-    console.log(event);
-})
+for (let ship of ships) {
+    ship.addEventListener("dragstart", function (event){
+        let selectedShip = event.target;
 
-dropzone.addEventListener("dragover", function (event){
-    event.preventDefault();
-})
+        shipdest.addEventListener("dragover", function (event){
+            event.preventDefault();
+        })
 
-dropzone.addEventListener("drop", function (event){
-    dropzone.appendChild(ship);
-})
+        shipdest.addEventListener("drop", function (event){
+            shipdest.appendChild(selectedShip);
+            selectedShip = null;
+        })
+
+        shipbase.addEventListener("dragover", function (event){
+            event.preventDefault();
+        })
+
+        shipbase.addEventListener("drop", function (event){
+            shipbase.appendChild(selectedShip);
+            selectedShip = null;
+        })
+    })
+}
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
     inizializeAttackBoard();
