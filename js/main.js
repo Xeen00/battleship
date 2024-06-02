@@ -4,7 +4,7 @@ class field {
         this.x = x;
         this.y = y;
         this.ship = null;
-        this.hit = hit;
+        this.hit = false;
     }
 }
 
@@ -42,6 +42,20 @@ function initializeAttackBoard(){
 
     for(let field of attackFields) {
         field.element.classList.add("field");
+        field.element.addEventListener("mousedown", function (event) {
+            event.preventDefault();
+            if (!field.hit) {
+                field.hit = true;
+                if (field.ship != null) {
+                    console.log("hit");
+                    field.element.style.backgroundColor = "red";
+                } else {
+                    console.log("miss");
+                    field.element.style.backgroundColor = "blue";
+                    getAttacked();
+                }
+            }
+        })
         attackBoard.appendChild(field.element);
     }
 
@@ -90,7 +104,7 @@ function removeShip(ship){
 }
 
 
-function startGame(){
+function logGame(){
     for (let field of attackFields) {
         console.log("attack", field.ship);
     }
@@ -101,4 +115,21 @@ function startGame(){
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
+}
+
+function getAttacked(){
+    let x = getRandomInt(10);
+    let y = getRandomInt(10);
+    while (defenseFields[x * 10 + y].hit == true) {
+        x = getRandomInt(10);
+        y = getRandomInt(10);
+    }
+    if (defenseFields[x * 10 + y].ship != null) {
+        defenseFields[x * 10 + y].ship.style.backgroundColor = "red";
+        console.log("hit", x, y);
+        getAttacked();
+    }
+    defenseFields[x * 10 + y].hit = true;
+    defenseFields[x * 10 + y].element.style.backgroundColor = "blue";
+    console.log("miss", x, y);
 }
