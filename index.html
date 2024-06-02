@@ -8,15 +8,23 @@
     <body>
         <h1>Battleship</h1>
         <p>Place your boats on the board and start the game</p>
+        <button id="start-game" onclick="startGame()">Start Game</button>
+        <div class="main-container">
+            <div class="center-container">
+                <div class="board-container" id="defense-board"></div>
+                <div id="shipbase" class="base">
+                    <div class="ship" id="ship1" draggable="true">ship1</div>
+                    <div class="ship" id="ship2" draggable="true">ship2</div>
+                    <div class="ship" id="ship3" draggable="true">ship3</div>
+                </div>
+            </div>
+            <div class="center-container">
+                <div class="board-container" id="attack-board"></div>
+            </div>
+        </div>
 
-        <div id="shipbase" class="base">
-            <div class="ship" id="ship1" draggable="true">ship1</div>
-            <div class="ship" id="ship2" draggable="true">ship2</div>
-            <div class="ship" id="ship3" draggable="true">ship3</div>
-        </div>
-        <div class="board-container">
-            <div class="base"></div>
-        </div>
+
+
 
         <script src="js/main.js"></script>
     </body>
