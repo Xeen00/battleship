@@ -8,12 +8,22 @@ class field {
     }
 }
 
+class ship {
+    constructor(element, length, orientation) {
+        this.element = element;
+        this.length = length;
+        this.orientation = orientation;
+    }
+}
+
 const ownFleetOfShips = document.getElementsByClassName("ship");
 const enemyFleetOfShips = ["ship1", "ship2", "ship3"];
 const attackFields = [];
 const defenseFields = [];
 const defenseBoard = document.getElementById("defense-board");
 const attackBoard = document.getElementById("attack-board");
+const base = document.getElementById("shipbase");
+let started = false;
 
 initializeDefenseBoard();
 initializeAttackBoard();
@@ -44,15 +54,17 @@ function initializeAttackBoard(){
         field.element.classList.add("field");
         field.element.addEventListener("mousedown", function (event) {
             event.preventDefault();
-            if (!field.hit) {
-                field.hit = true;
-                if (field.ship != null) {
-                    console.log("hit");
-                    field.element.style.backgroundColor = "red";
-                } else {
-                    console.log("miss");
-                    field.element.style.backgroundColor = "blue";
-                    getAttacked();
+            if (started){
+                if (!field.hit) {
+                    field.hit = true;
+                    if (field.ship != null) {
+                        console.log("hit");
+                        field.element.style.backgroundColor = "red";
+                    } else {
+                        console.log("miss");
+                        field.element.style.backgroundColor = "blue";
+                        getAttacked();
+                    }
                 }
             }
         })
@@ -100,6 +112,17 @@ function removeShip(ship){
     }
     if (i < defenseFields.length){
         defenseFields[i].ship = null;
+    }
+}
+
+function startGame(){
+    if (!started && base.children.length == 0){
+        started = true;
+        console.log("start game");
+    }else if (started) {
+        console.log("already started");
+    }else {
+        console.log("place all ships");
     }
 }
 
