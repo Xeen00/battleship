@@ -1,28 +1,36 @@
+class field {
+    constructor(x, y, ship, hit) {
+        this.x = x;
+        this.y = y;
+        this.ship = ship;
+        this.hit = hit;
+    }
+}
+
 const ships = document.getElementsByClassName("ship");
-const shipdest = document.getElementById("shipdest");
-const shipbase = document.getElementById("shipbase");
+const fields = document.getElementsByClassName("field");
+const board = document.getElementById("board-container");
+
+for (let i = 0; i < 10; i++) {
+    for (let j = 0; j < 10; j++) {
+        board.appendChild(document.createElement("div")).classList.add("field");
+    }
+}
 
 for (let ship of ships) {
     ship.addEventListener("dragstart", function (event){
         let selectedShip = event.target;
 
-        shipdest.addEventListener("dragover", function (event){
-            event.preventDefault();
-        })
+        for (let base of bases) {
+            base.addEventListener("dragover", function (event){
+                event.preventDefault();
+            })
 
-        shipdest.addEventListener("drop", function (event){
-            shipdest.appendChild(selectedShip);
-            selectedShip = null;
-        })
-
-        shipbase.addEventListener("dragover", function (event){
-            event.preventDefault();
-        })
-
-        shipbase.addEventListener("drop", function (event){
-            shipbase.appendChild(selectedShip);
-            selectedShip = null;
-        })
+            base.addEventListener("drop", function (event){
+                base.appendChild(selectedShip);
+                selectedShip = null;
+            })
+        }
     })
 }
 
