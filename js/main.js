@@ -67,6 +67,10 @@ function initializeAttackBoard(){
         attackBoard.appendChild(field.element);
     }
 
+    initializeEnemyShips();
+
+}
+function initializeEnemyShips(){
     for (let i = 0; i < enemyFleetOfShips.length; i++) {
         let x = getRandomInt(10);
         let y = getRandomInt(10);
@@ -76,7 +80,6 @@ function initializeAttackBoard(){
         }
         attackFields[x * 10 + y].ship = enemyFleetOfShips[i];
     }
-
 }
 function initializeShips(){
     for(ship of baseShips){
@@ -123,12 +126,35 @@ function removeShip(ship){
 function startGame(){
     if (!started && base.children.length == 0){
         started = true;
+        fixShips();
         console.log("start game");
     }else if (started) {
         console.log("already started");
     }else {
         console.log("place all ships");
     }
+}
+
+function restartGame(){
+    for (let field of defenseFields) {
+        field.ship = null;
+        field.hit = false;
+        field.element.innerHTML = "";
+        field.element.style.backgroundColor = "lightgrey";
+    }
+    for (let field of attackFields) {
+        field.ship = null;
+        field.hit = false;
+        field.element.innerHTML = "";
+        field.element.style.backgroundColor = "lightgrey";
+    }
+    initializeShips();
+    initializeEnemyShips();
+    defenseScore = 0;
+    attackScore = 0;
+    updateScoreBoard();
+    console.log("restart game");
+    started = false;
 }
 
 
@@ -182,6 +208,12 @@ function attackField(x, y){
         }
     }
     updateScoreBoard();
+}
+
+function fixShips(){
+    for(ship of ownFleetOfShips){
+        ship.element.setAttribute("draggable", "false");
+    }
 }
 
 function updateScoreBoard(){
