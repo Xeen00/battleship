@@ -23,7 +23,11 @@ const defenseFields = [];
 const defenseBoard = document.getElementById("defense-board");
 const attackBoard = document.getElementById("attack-board");
 const base = document.getElementById("shipbase");
+const defenseScoreBoard = document.getElementById("defense-score");
+const attackScoreBoard = document.getElementById("attack-score");
 let started = false;
+let defenseScore = 0;
+let attackScore = 0;
 
 initializeDefenseBoard();
 initializeAttackBoard();
@@ -60,6 +64,7 @@ function initializeAttackBoard(){
                     if (field.ship != null) {
                         console.log("hit");
                         field.element.style.backgroundColor = "red";
+                        attackScore++;
                     } else {
                         console.log("miss");
                         field.element.style.backgroundColor = "blue";
@@ -150,9 +155,17 @@ function getAttacked(){
     if (defenseFields[x * 10 + y].ship != null) {
         defenseFields[x * 10 + y].ship.style.backgroundColor = "red";
         console.log("hit", x, y);
+        defenseScore++;
         getAttacked();
+    }else {
+        defenseFields[x * 10 + y].element.style.backgroundColor = "blue";
+        console.log("miss", x, y);
     }
     defenseFields[x * 10 + y].hit = true;
-    defenseFields[x * 10 + y].element.style.backgroundColor = "blue";
-    console.log("miss", x, y);
+    updateScoreBoard();
+}
+
+function updateScoreBoard(){
+    defenseScoreBoard.innerHTML = attackScore;
+    attackScoreBoard.innerHTML = defenseScore;
 }
