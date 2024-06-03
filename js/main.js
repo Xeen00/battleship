@@ -58,20 +58,7 @@ function initializeAttackBoard(){
         field.element.classList.add("field");
         field.element.addEventListener("mousedown", function (event) {
             event.preventDefault();
-            if (started){
-                if (!field.hit) {
-                    field.hit = true;
-                    if (field.ship != null) {
-                        console.log("hit");
-                        field.element.style.backgroundColor = "red";
-                        attackScore++;
-                    } else {
-                        console.log("miss");
-                        field.element.style.backgroundColor = "blue";
-                        getAttacked();
-                    }
-                }
-            }
+            attackField(field.x, field.y);
         })
         attackBoard.appendChild(field.element);
     }
@@ -162,6 +149,25 @@ function getAttacked(){
         console.log("miss", x, y);
     }
     defenseFields[x * 10 + y].hit = true;
+    updateScoreBoard();
+}
+
+function attackField(x, y){
+    field = attackFields[x * 10 + y];
+    if (started){
+        if (!field.hit) {
+            field.hit = true;
+            if (field.ship != null) {
+                console.log("hit");
+                field.element.style.backgroundColor = "red";
+                attackScore++;
+            } else {
+                console.log("miss");
+                field.element.style.backgroundColor = "blue";
+                getAttacked();
+            }
+        }
+    }
     updateScoreBoard();
 }
 
