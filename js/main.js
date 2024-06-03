@@ -89,11 +89,12 @@ function initializeShips(){
         ship.element.innerHTML = ship.name;
         base.appendChild(ship.element);
         ownFleetOfShips.push(ship);
+        console.log(ship);
     }
 
     for (let ship of ownFleetOfShips) {
         ship.element.addEventListener("dragstart", function (event){
-            let selectedShip = event.target;
+            let selectedShip = ship;
 
             for (let field of defenseFields) {
                 field.element.addEventListener("dragover", function (event){
@@ -102,8 +103,8 @@ function initializeShips(){
 
                 field.element.addEventListener("drop", function (event){
                     if (field.ship == null) {
-                        removeShip(selectedShip);
-                        field.element.appendChild(selectedShip);
+                        removeShip(selectedShip, defenseFields);
+                        field.element.appendChild(selectedShip.element);
                         field.ship = selectedShip;
                     }
                     selectedShip = null;
@@ -113,13 +114,13 @@ function initializeShips(){
     }
 }
 
-function removeShip(ship){
+function removeShip(ship, fields){
     let i = 0;
-    while (i < defenseFields.length && defenseFields[i].ship != ship) {
+    while (i < fields.length && fields[i].ship != ship) {
         i++;
     }
-    if (i < defenseFields.length){
-        defenseFields[i].ship = null;
+    if (i < fields.length){
+        fields[i].ship = null;
     }
 }
 
@@ -163,7 +164,7 @@ function logGame(){
         console.log("attack", field.ship, field.y, field.x);
     }
     for (let field of defenseFields) {
-        console.log("attack", field.ship, field.y, field.x);
+        console.log("defense", field.ship, field.y, field.x);
     }
 }
 
