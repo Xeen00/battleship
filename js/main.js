@@ -9,14 +9,18 @@ class field {
 }
 
 class ship {
-    constructor(element, length, orientation) {
+    constructor(element, length, name) {
         this.element = element;
         this.length = length;
-        this.orientation = orientation;
+        this.orientation = "horizontal";
+        this.name = name;
     }
 }
 
-const ownFleetOfShips = document.getElementsByClassName("ship");
+const baseShips = [ship1 = new ship(document.createElement("div"), 1, "ship1"),
+    ship2 = new ship(document.createElement("div"), 2, "ship2"),
+    ship3 = new ship(document.createElement("div"), 3, "ship3")];
+const ownFleetOfShips= [];
 const enemyFleetOfShips = ["ship1", "ship2", "ship3"];
 const attackFields = [];
 const defenseFields = [];
@@ -75,8 +79,17 @@ function initializeAttackBoard(){
 
 }
 function initializeShips(){
+    for(ship of baseShips){
+        ship.element.classList.add("ship");
+        ship.element.setAttribute("draggable", "true");
+        ship.element.style.width = ship.length * 50 + "px";
+        ship.element.innerHTML = ship.name;
+        base.appendChild(ship.element);
+        ownFleetOfShips.push(ship);
+    }
+
     for (let ship of ownFleetOfShips) {
-        ship.addEventListener("dragstart", function (event){
+        ship.element.addEventListener("dragstart", function (event){
             let selectedShip = event.target;
 
             for (let field of defenseFields) {
@@ -121,10 +134,10 @@ function startGame(){
 
 function logGame(){
     for (let field of attackFields) {
-        console.log("attack", field.ship);
+        console.log("attack", field.ship, field.y, field.x);
     }
     for (let field of defenseFields) {
-        console.log("defense", field.ship);
+        console.log("attack", field.ship, field.y, field.x);
     }
 }
 
