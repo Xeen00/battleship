@@ -107,6 +107,7 @@ function initializeShips(){
 
                 field.element.addEventListener("drop", function (event){
                     console.log(selectedShip.length);
+                    removeShip(ship, defenseFields);
                     placeShip(field, selectedShip, defenseFields);
                     // if (field.ship == null && checkSpaces(selectedShip.length, field.x, field.y, selectedShip.orientation, defenseFields)){
                     //     removeShip(selectedShip, defenseFields);
@@ -149,7 +150,10 @@ function removeShip(ship, fields){
         i++;
     }
     if (i < fields.length){
-        fields[i].ship = null;
+        for (let j = i; j < i + ship.length; j++) {
+            fields[j].ship = null;
+            fields[j].element.style.backgroundColor = "lightgrey";
+        }
     }
 }
 
@@ -267,3 +271,17 @@ function placeShip(field, selectedShip, fields){
     }
 }
 
+function placeShipRandom(){
+    for (let ship of ownFleetOfShips) {
+        let x = getRandomInt(10);
+        let y = getRandomInt(10);
+        let field = defenseFields[x * 10 + y];
+        while (checkSpaces(ship.length, x, y, ship.orientation, defenseFields) == false) {
+            x = getRandomInt(10);
+            y = getRandomInt(10);
+            field = defenseFields[x * 10 + y];
+        }
+        placeShip(field, ship, defenseFields);
+    }
+
+}
