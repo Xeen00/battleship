@@ -95,13 +95,13 @@ function initializeShips(){
     for (let ship of ownFleetOfShips) {
         ship.element.addEventListener("dragstart", function (event){
             let selectedShip = ship;
-
             for (let field of defenseFields) {
                 field.element.addEventListener("dragover", function (event){
                     event.preventDefault();
                 })
 
                 field.element.addEventListener("drop", function (event){
+                    console.log(selectedShip.length);
                     if (field.ship == null && checkSpaces(selectedShip.length, field.x, field.y, selectedShip.orientation, defenseFields)){
                         removeShip(selectedShip, defenseFields);
                         field.element.appendChild(selectedShip.element);
@@ -116,11 +116,12 @@ function initializeShips(){
 
 
 function checkSpaces(size, x, y, orientation, fields){
-    let i = x * 10 + y;
-    if (i + size < fields.length){
+    let i = y;
+    console.log(i + size);
+    if (i + size <= 10){
         for (let j = i; j < i + size; j++) {
+            console.log(j)
             if (fields[j].ship != null) {
-                console.log(false);
                 return false;
             }
         }
