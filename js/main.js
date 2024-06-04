@@ -102,7 +102,7 @@ function initializeShips(){
                 })
 
                 field.element.addEventListener("drop", function (event){
-                    if (field.ship == null) {
+                    if (field.ship == null && checkSpaces(selectedShip.length, field.x, field.y, selectedShip.orientation, defenseFields)){
                         removeShip(selectedShip, defenseFields);
                         field.element.appendChild(selectedShip.element);
                         field.ship = selectedShip;
@@ -117,13 +117,18 @@ function initializeShips(){
 
 function checkSpaces(size, x, y, orientation, fields){
     let i = x * 10 + y;
-    if (orientation == "horizontal") {
-        while (fields[i].ship == null && i < fields.length){
-        i++;}
-        if (i < fields.length){
-            return false;
+    if (i + size < fields.length){
+        for (let j = i; j < i + size; j++) {
+            if (fields[j].ship != null) {
+                console.log(false);
+                return false;
+            }
         }
+        return true
+    } else {
+        return false;
     }
+
 }
 
 function removeShip(ship, fields){
