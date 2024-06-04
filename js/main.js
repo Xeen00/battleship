@@ -100,6 +100,7 @@ function initializeShips(){
         ship.element.addEventListener("dragstart", function (event){
             let selectedShip = ship;
             for (let field of defenseFields) {
+
                 field.element.addEventListener("dragover", function (event){
                     event.preventDefault();
                 })
@@ -200,6 +201,7 @@ function getRandomInt(max) {
 }
 
 function getAttacked(){
+    console.log(defenseFields);
     let x = getRandomInt(10);
     let y = getRandomInt(10);
     while (defenseFields[x * 10 + y].hit == true) {
@@ -208,7 +210,7 @@ function getAttacked(){
     }
     console.log(defenseFields[x * 10 + y]);
     if (defenseFields[x * 10 + y].ship != null) {
-        defenseFields[x * 10 + y].style.backgroundColor = "red";
+        defenseFields[x * 10 + y].element.style.backgroundColor = "red";
         console.log("hit", x, y);
         defenseScore++;
         getAttacked();
