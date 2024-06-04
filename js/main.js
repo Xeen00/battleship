@@ -107,16 +107,17 @@ function initializeShips(){
 
                 field.element.addEventListener("drop", function (event){
                     console.log(selectedShip.length);
-                    if (field.ship == null && checkSpaces(selectedShip.length, field.x, field.y, selectedShip.orientation, defenseFields)){
-                        removeShip(selectedShip, defenseFields);
-                        field.element.appendChild(selectedShip.element);
-                        for (let i = field.y; i < field.y + selectedShip.length; i++) {
-                            defenseFields[field.x * 10 + i].ship = selectedShip;
-                            defenseFields[field.x * 10 + i].element.style.backgroundColor = "black";
-
-                        }
-                        field.ship = selectedShip;
-                    }
+                    placeShip(field, selectedShip, defenseFields);
+                    // if (field.ship == null && checkSpaces(selectedShip.length, field.x, field.y, selectedShip.orientation, defenseFields)){
+                    //     removeShip(selectedShip, defenseFields);
+                    //     field.element.appendChild(selectedShip.element);
+                    //     for (let i = field.y; i < field.y + selectedShip.length; i++) {
+                    //         defenseFields[field.x * 10 + i].ship = selectedShip;
+                    //         defenseFields[field.x * 10 + i].element.style.backgroundColor = "black";
+                    //
+                    //     }
+                    //     field.ship = selectedShip;
+                    // }
                     selectedShip = null;
                 })
             }
@@ -251,3 +252,18 @@ function updateScoreBoard(){
     defenseScoreBoard.innerHTML = attackScore;
     attackScoreBoard.innerHTML = defenseScore;
 }
+
+function placeShip(field, selectedShip, fields){
+    console.log(selectedShip.length);
+    if (field.ship == null && checkSpaces(selectedShip.length, field.x, field.y, selectedShip.orientation, fields)){
+        removeShip(selectedShip, fields);
+        field.element.appendChild(selectedShip.element);
+        for (let i = field.y; i < field.y + selectedShip.length; i++) {
+            fields[field.x * 10 + i].ship = selectedShip;
+            fields[field.x * 10 + i].element.style.backgroundColor = "black";
+
+        }
+        field.ship = selectedShip;
+    }
+}
+
