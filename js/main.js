@@ -114,6 +114,18 @@ function initializeShips(){
     }
 }
 
+
+function checkSpaces(size, x, y, orientation, fields){
+    let i = x * 10 + y;
+    if (orientation == "horizontal") {
+        while (fields[i].ship == null && i < fields.length){
+        i++;}
+        if (i < fields.length){
+            return false;
+        }
+    }
+}
+
 function removeShip(ship, fields){
     let i = 0;
     while (i < fields.length && fields[i].ship != ship) {
