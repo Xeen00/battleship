@@ -70,6 +70,7 @@ function initializeAttackBoard(){
     initializeEnemyShips();
 
 }
+
 function initializeEnemyShips(){
     for (let i = 0; i < enemyFleetOfShips.length; i++) {
         let x = getRandomInt(10);
@@ -81,6 +82,7 @@ function initializeEnemyShips(){
         attackFields[x * 10 + y].ship = enemyFleetOfShips[i];
     }
 }
+
 function initializeShips(){
     for(ship of baseShips){
         ship.element.classList.add("ship");
@@ -105,6 +107,11 @@ function initializeShips(){
                     if (field.ship == null && checkSpaces(selectedShip.length, field.x, field.y, selectedShip.orientation, defenseFields)){
                         removeShip(selectedShip, defenseFields);
                         field.element.appendChild(selectedShip.element);
+                        for (let i = field.y; i < field.y + selectedShip.length; i++) {
+                            defenseFields[field.x * 10 + i].ship = selectedShip;
+                            defenseFields[field.x * 10 + i].element.style.backgroundColor = "black";
+
+                        }
                         field.ship = selectedShip;
                     }
                     selectedShip = null;
