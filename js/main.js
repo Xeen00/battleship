@@ -19,7 +19,9 @@ class ship {
 
 const baseShips = [ship1 = new ship(document.createElement("div"), 1, "ship1"),
     ship2 = new ship(document.createElement("div"), 2, "ship2"),
-    ship3 = new ship(document.createElement("div"), 3, "ship3")];
+    ship3 = new ship(document.createElement("div"), 3, "ship3"),
+    ship3 = new ship(document.createElement("div"), 4, "ship4"),
+    ship3 = new ship(document.createElement("div"), 5, "ship5")];
 const ownFleetOfShips= [];
 const enemyFleetOfShips = ["ship1", "ship2", "ship3"];
 const attackFields = [];
