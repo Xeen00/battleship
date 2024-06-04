@@ -206,8 +206,9 @@ function getAttacked(){
         x = getRandomInt(10);
         y = getRandomInt(10);
     }
+    console.log(defenseFields[x * 10 + y]);
     if (defenseFields[x * 10 + y].ship != null) {
-        defenseFields[x * 10 + y].ship.style.backgroundColor = "red";
+        defenseFields[x * 10 + y].style.backgroundColor = "red";
         console.log("hit", x, y);
         defenseScore++;
         getAttacked();
