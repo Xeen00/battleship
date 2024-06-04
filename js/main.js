@@ -17,13 +17,19 @@ class ship {
     }
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+    initializeDefenseBoard();
+    initializeAttackBoard();
+    initializeShips()
+    });
+
 const baseShips = [ship1 = new ship(document.createElement("div"), 1, "ship1"),
     ship2 = new ship(document.createElement("div"), 2, "ship2"),
     ship3 = new ship(document.createElement("div"), 3, "ship3"),
     ship3 = new ship(document.createElement("div"), 4, "ship4"),
     ship3 = new ship(document.createElement("div"), 5, "ship5")];
 const ownFleetOfShips= [];
-const enemyFleetOfShips = ["ship1", "ship2", "ship3"];
+const enemyFleetOfShips = [];
 const attackFields = [];
 const defenseFields = [];
 const defenseBoard = document.getElementById("defense-board");
@@ -34,10 +40,6 @@ const attackScoreBoard = document.getElementById("attack-score");
 let started = false;
 let defenseScore = 0;
 let attackScore = 0;
-
-initializeDefenseBoard();
-initializeAttackBoard();
-initializeShips()
 
 
 function initializeDefenseBoard(){
@@ -74,14 +76,26 @@ function initializeAttackBoard(){
 }
 
 function initializeEnemyShips(){
-    for (let i = 0; i < enemyFleetOfShips.length; i++) {
+    for(ship of baseShips){
+        ship.element.classList.add("ship");
+        ship.element.setAttribute("draggable", "true");
+        ship.element.style.width = ship.length * 50 + "px";
+        ship.element.innerHTML = ship.name;
+        base.appendChild(ship.element);
+        enemyFleetOfShips.push(ship);
+        console.log(ship);
+    }
+
+    for (let ship of enemyFleetOfShips) {
         let x = getRandomInt(10);
         let y = getRandomInt(10);
-        while (attackFields[x * 10 + y].ship != null) {
+        let field = attackField[x * 10 + y];
+        while (checkSpaces(ship.length, x, y, ship.orientation, attackFields) == false) {
             x = getRandomInt(10);
             y = getRandomInt(10);
+            field = defenseFields[x * 10 + y];
         }
-        attackFields[x * 10 + y].ship = enemyFleetOfShips[i];
+        placeShip(field, ship, defenseFields);
     }
 }
 
@@ -109,16 +123,6 @@ function initializeShips(){
                     console.log(selectedShip.length);
                     removeShip(ship, defenseFields);
                     placeShip(field, selectedShip, defenseFields);
-                    // if (field.ship == null && checkSpaces(selectedShip.length, field.x, field.y, selectedShip.orientation, defenseFields)){
-                    //     removeShip(selectedShip, defenseFields);
-                    //     field.element.appendChild(selectedShip.element);
-                    //     for (let i = field.y; i < field.y + selectedShip.length; i++) {
-                    //         defenseFields[field.x * 10 + i].ship = selectedShip;
-                    //         defenseFields[field.x * 10 + i].element.style.backgroundColor = "black";
-                    //
-                    //     }
-                    //     field.ship = selectedShip;
-                    // }
                     selectedShip = null;
                 })
             }
@@ -283,5 +287,4 @@ function placeShipRandom(){
         }
         placeShip(field, ship, defenseFields);
     }
-
 }
