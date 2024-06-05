@@ -1,3 +1,24 @@
+const ownFleetOfShips= [ship1 = new ship(document.createElement("div"), 1, "ship1"),
+    ship2 = new ship(document.createElement("div"), 2, "ship2"),
+    ship3 = new ship(document.createElement("div"), 3, "ship3"),
+    ship4 = new ship(document.createElement("div"), 4, "ship4"),
+    ship5 = new ship(document.createElement("div"), 5, "ship5")];
+const enemyFleetOfShips = [ship1 = new ship(document.createElement("div"), 1, "ship1"),
+    ship2 = new ship(document.createElement("div"), 2, "ship2"),
+    ship3 = new ship(document.createElement("div"), 3, "ship3"),
+    ship4 = new ship(document.createElement("div"), 4, "ship4"),
+    ship5 = new ship(document.createElement("div"), 5, "ship5")];
+const attackFields = [];
+const defenseFields = [];
+const defenseBoard = document.getElementById("defense-board");
+const attackBoard = document.getElementById("attack-board");
+const base = document.getElementById("shipbase");
+const defenseScoreBoard = document.getElementById("defense-score");
+const attackScoreBoard = document.getElementById("attack-score");
+let started = false;
+let defenseScore = 0;
+let attackScore = 0;
+
 class field {
     constructor(element, x, y, ship, hit) {
         this.element = element;
@@ -20,26 +41,9 @@ class ship {
 document.addEventListener('DOMContentLoaded', () => {
     initializeDefenseBoard();
     initializeAttackBoard();
-    initializeShips()
+    initializeShips();
+    initializeEnemyShips();
     });
-
-const baseShips = [ship1 = new ship(document.createElement("div"), 1, "ship1"),
-    ship2 = new ship(document.createElement("div"), 2, "ship2"),
-    ship3 = new ship(document.createElement("div"), 3, "ship3"),
-    ship3 = new ship(document.createElement("div"), 4, "ship4"),
-    ship3 = new ship(document.createElement("div"), 5, "ship5")];
-const ownFleetOfShips= [];
-const enemyFleetOfShips = [];
-const attackFields = [];
-const defenseFields = [];
-const defenseBoard = document.getElementById("defense-board");
-const attackBoard = document.getElementById("attack-board");
-const base = document.getElementById("shipbase");
-const defenseScoreBoard = document.getElementById("defense-score");
-const attackScoreBoard = document.getElementById("attack-score");
-let started = false;
-let defenseScore = 0;
-let attackScore = 0;
 
 
 function initializeDefenseBoard(){
@@ -76,19 +80,10 @@ function initializeAttackBoard(){
 }
 
 function initializeEnemyShips(){
-    for(ship of baseShips){
-        ship.element.classList.add("ship");
-        ship.element.setAttribute("draggable", "true");
-        ship.element.style.width = ship.length * 50 + "px";
-        ship.element.innerHTML = ship.name;
-        base.appendChild(ship.element);
-        enemyFleetOfShips.push(ship);
-        console.log(ship);
-    }
-
     for (let ship of enemyFleetOfShips) {
         let x = getRandomInt(10);
         let y = getRandomInt(10);
+        console.log(attackField[x * 10 + y]);
         let field = attackField[x * 10 + y];
         while (checkSpaces(ship.length, x, y, ship.orientation, attackFields) == false) {
             x = getRandomInt(10);
@@ -101,17 +96,14 @@ function initializeEnemyShips(){
 }
 
 function initializeShips(){
-    for(ship of baseShips){
+    for(ship of ownFleetOfShips){
         ship.element.classList.add("ship");
         ship.element.setAttribute("draggable", "true");
         ship.element.style.width = ship.length * 50 + "px";
         ship.element.innerHTML = ship.name;
         base.appendChild(ship.element);
-        ownFleetOfShips.push(ship);
         console.log(ship);
-    }
 
-    for (let ship of ownFleetOfShips) {
         ship.element.addEventListener("dragstart", function (event){
             let selectedShip = ship;
             for (let field of defenseFields) {
