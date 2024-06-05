@@ -95,6 +95,7 @@ function initializeEnemyShips(){
             y = getRandomInt(10);
             field = defenseFields[x * 10 + y];
         }
+        console.log(field);
         placeShip(field, ship, defenseFields);
     }
 }
@@ -262,8 +263,9 @@ function updateScoreBoard(){
 }
 
 function placeShip(field, selectedShip, fields){
-    console.log(selectedShip.length);
-    if (field.ship == null && checkSpaces(selectedShip.length, field.x, field.y, selectedShip.orientation, fields)){
+    // console.log(selectedShip.length);
+    console.log(field);
+    if (field.ship === null && checkSpaces(selectedShip.length, field.x, field.y, selectedShip.orientation, fields)){
         removeShip(selectedShip, fields);
         field.element.appendChild(selectedShip.element);
         for (let i = field.y; i < field.y + selectedShip.length; i++) {
