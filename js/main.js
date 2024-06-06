@@ -48,7 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeAttackBoard();
     initializeShips();
     initializeEnemyShips();
-    });
+});
+
+function gameLoop(){
 
 
 function initializeDefenseBoard(){
@@ -80,7 +82,9 @@ function initializeAttackBoard(){
         field.element.classList.add("field");
         field.element.addEventListener("mousedown", function (event) {
             event.preventDefault();
-            attackField(field.x, field.y);
+            if (!attack(field.x, field.y, attackFields)){
+                getAttacked();
+            };
         })
         attackBoard.appendChild(field.element);
     }
@@ -208,29 +212,26 @@ function getRandomInt(max) {
 }
 
 function getAttacked(){
-    console.log(defenseFields);
-    let x = getRandomInt(10);
-    let y = getRandomInt(10);
-    while (defenseFields[x * 10 + y].hit == true) {
-        x = getRandomInt(10);
-        y = getRandomInt(10);
+    do {
+        let x = getRandomInt(10);
+        let y = getRandomInt(10);
+    }while (!defenseFields[x * 10 + y].hit);
+
+    if (attack(x, y, defenseFields)){
+        if (attack(x, y -1, defenseFields)){
+
+        }
     }
-    console.log(defenseFields[x * 10 + y]);
-    if (defenseFields[x * 10 + y].ship != null) {
-        defenseFields[x * 10 + y].element.style.backgroundColor = "red";
-        console.log("hit", x, y);
-        defenseScore++;
-        getAttacked();
-    }else {
-        defenseFields[x * 10 + y].element.style.backgroundColor = "blue";
-        console.log("miss", x, y);
-    }
-    defenseFields[x * 10 + y].hit = true;
+
     updateScoreBoard();
 }
 
 function attackField(x, y){
-    field = attackFields[x * 10 + y];
+    attack(x, y, attackFields);
+}
+
+function attack(x, y, fields){
+    field = fields[x * 10 + y];
     if (started){
         if (!field.hit) {
             field.hit = true;
@@ -238,10 +239,11 @@ function attackField(x, y){
                 console.log("hit");
                 field.element.style.backgroundColor = "red";
                 attackScore++;
+                return true;
             } else {
                 console.log("miss");
                 field.element.style.backgroundColor = "blue";
-                getAttacked();
+                return false;
             }
         }
     }
@@ -278,16 +280,20 @@ function placeShip( field, selectedShip, fields, visible){
 }
 
 function placeShipRandom(){
-    for (let ship of ownFleetOfShips) {
-        let x = getRandomInt(9);
-        let y = getRandomInt(9);
-        let field = defenseFields[x * 10 + y];
-        console.log("start random placing ship:", ship, "on the field:", field);
-        while (checkSpaces(ship.length, x, y, ship.orientation, defenseFields) === false) {
-            x = getRandomInt(10);
-            y = getRandomInt(10);
-            field = defenseFields[x * 10 + y];
+    if (!started){
+        for (let ship of ownFleetOfShips) {
+            let x = getRandomInt(9);
+            let y = getRandomInt(9);
+            let field = defenseFields[x * 10 + y];
+            console.log("start random placing ship:", ship, "on the field:", field);
+            while (checkSpaces(ship.length, x, y, ship.orientation, defenseFields) === false) {
+                x = getRandomInt(10);
+                y = getRandomInt(10);
+                field = defenseFields[x * 10 + y];
+            }
+            placeShip(field, ship, defenseFields, true);
         }
-        placeShip(field, ship, defenseFields, true);
+    }else {
+        console.log("game already started");
     }
 }
