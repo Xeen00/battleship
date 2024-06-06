@@ -1,4 +1,4 @@
-class field {
+class Field {
     constructor(element, x, y) {
         this.element = element;
         this.x = x;
@@ -8,7 +8,7 @@ class field {
     }
 }
 
-class ship {
+class Ship {
     constructor(element, length, name) {
         this.element = element;
         this.length = length;
@@ -17,19 +17,19 @@ class ship {
     }
 }
 
-const ownFleetOfShips= [ship1 = new ship(document.createElement("div"), 1, "ship1"),
-    ship2 = new ship(document.createElement("div"), 2, "ship2"),
-    ship3 = new ship(document.createElement("div"), 3, "ship3"),
-    ship4 = new ship(document.createElement("div"), 4, "ship4"),
-    ship5 = new ship(document.createElement("div"), 5, "ship5")];
-const enemyFleetOfShips = [ship1 = new ship(document.createElement("div"), 1, "ship1"),
-    ship2 = new ship(document.createElement("div"), 2, "ship2"),
-    ship3 = new ship(document.createElement("div"), 3, "ship3"),
-    ship4 = new ship(document.createElement("div"), 4, "ship4"),
-    ship5 = new ship(document.createElement("div"), 5, "ship5")];
+const ownFleetOfShips= [ship1 = new Ship(document.createElement("div"), 1, "ship1"),
+    ship2 = new Ship(document.createElement("div"), 2, "ship2"),
+    ship3 = new Ship(document.createElement("div"), 3, "ship3"),
+    ship4 = new Ship(document.createElement("div"), 4, "ship4"),
+    ship5 = new Ship(document.createElement("div"), 5, "ship5")];
+const enemyFleetOfShips = [ship1 = new Ship(document.createElement("div"), 1, "ship1"),
+    ship2 = new Ship(document.createElement("div"), 2, "ship2"),
+    ship3 = new Ship(document.createElement("div"), 3, "ship3"),
+    ship4 = new Ship(document.createElement("div"), 4, "ship4"),
+    ship5 = new Ship(document.createElement("div"), 5, "ship5")];
 
-const attackFields = [];
-const defenseFields = [];
+let defenseFields = [];
+let attackFields = [];
 
 const defenseBoard = document.getElementById("defense-board");
 const attackBoard = document.getElementById("attack-board");
@@ -46,7 +46,7 @@ let attackScore = 0;
 document.addEventListener('DOMContentLoaded', () => {
     initializeDefenseBoard();
     initializeAttackBoard();
-    //initializeShips();
+    initializeShips();
     initializeEnemyShips();
     });
 
@@ -54,8 +54,9 @@ document.addEventListener('DOMContentLoaded', () => {
 function initializeDefenseBoard(){
     for (let i = 0; i < 10; i++) {
         for (let j = 0; j < 10; j++) {
-            defenseFields.push(new field(document.createElement("div"), i, j));
-
+            console.log("start initializing field:", i, j);
+            defenseFields.push(new Field(document.createElement("div"), i, j));
+            console.log("finished initializing defense field:", defenseFields[i * 10 + j]);
         }
     }
 
@@ -70,8 +71,8 @@ function initializeAttackBoard(){
     for (let i = 0; i < 10; i++) {
         for (let j = 0; j < 10; j++) {
             console.log("start initializing field:", i, j);
-            attackFields.push(i * 10 + j);
-            console.log("finished initializing field:", attackField(i * 10 +j));
+            attackFields.push(new Field(document.createElement("div"), i, j));
+            console.log("finished initializing attack field:", attackFields[i * 10 + j]);
         }
     }
 
@@ -276,7 +277,7 @@ function updateScoreBoard(){
 }
 
 function placeShip(field, selectedShip, fields){
-    console.log("!INFUNCTION trying to place:", ship, "on the field:", field);
+    console.log("!INFUNCTION trying to place:", selectedShip, "on the field:", field);
 
     if (field.ship === null && checkSpaces(selectedShip.length, field.x, field.y, selectedShip.orientation, fields)){
         console.log("field is ready for placement")
