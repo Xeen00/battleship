@@ -46,9 +46,6 @@ body {
 
 .field {
     background-color: lightgrey;
-    border-style: solid;
-    border-width: 1px;
-    border-color: black;
     color: white;
     display: flex;
     justify-content: center;
@@ -72,15 +69,15 @@ body {
     height: 60px;
 }
 
-.ship-body-block{
+.ship-body{
     background-color: black;
     border: 1px solid white;
 }
 
-.ship-body-point{
-    width: 0;
-    height: 0;
-    border-top: 30px solid transparent;
-    border-bottom: 30px solid transparent;
-    border-left: 30px solid black;
+.ship-end{
+    width: 60px;
+    height: 60px;
+    background-color: black;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    transform: rotate(90deg);
 }

@@ -50,8 +50,9 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeEnemyShips();
 });
 
-function gameLoop(){
+function gameLoop() {
 
+}
 
 function initializeDefenseBoard(){
     for (let i = 0; i < 10; i++) {
@@ -171,7 +172,7 @@ function removeShip(ship, fields){
     if (i < fields.length){
         for (let j = i; j < i + ship.length; j++) {
             fields[j].ship = null;
-            fields[j].element.style.backgroundColor = "lightgrey";
+            fields[j].element.classList.add("field");
             console.log("succesfully removed ship", ship, "from fields:", fields[j]);
         }
     }
@@ -268,12 +269,18 @@ function placeShip( field, selectedShip, fields, visible){
         console.log("field is ready for placement")
         removeShip(selectedShip, fields);
         field.element.appendChild(selectedShip.element);
+        let counter = 1;
         for (let i = field.y; i < field.y + selectedShip.length; i++) {
-            fields[field.x * 10 + i].ship = selectedShip;
+            currentField = fields[field.x * 10 + i];
+            currentField.ship = selectedShip;
             if (visible){
-                fields[field.x * 10 + i].element.style.backgroundColor = "black";
+                if (counter == selectedShip.length){
+                    currentField.element.classList.add("ship-end");
+                }else {
+                    currentField.element.classList.add("ship-body");
+                };
             }
-
+            counter++;
         }
         field.ship = selectedShip;
     }
