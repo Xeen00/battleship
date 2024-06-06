@@ -172,6 +172,8 @@ function removeShip(ship, fields){
     if (i < fields.length){
         for (let j = i; j < i + ship.length; j++) {
             fields[j].ship = null;
+            fields[j].element.classList.remove("ship-body");
+            fields[j].element.classList.remove("ship-end");
             fields[j].element.classList.add("field");
             console.log("succesfully removed ship", ship, "from fields:", fields[j]);
         }
@@ -273,7 +275,7 @@ function placeShip( field, selectedShip, fields, visible){
         for (let i = field.y; i < field.y + selectedShip.length; i++) {
             currentField = fields[field.x * 10 + i];
             currentField.ship = selectedShip;
-            if (visible){
+            if (visible & selectedShip.length > 1){
                 if (counter == selectedShip.length){
                     currentField.element.classList.add("ship-end");
                 }else {

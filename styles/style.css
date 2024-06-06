@@ -1,4 +1,8 @@
 /* styles/style.css */
+:root {
+    --ship-color: #293133;
+}
+
 body {
     font-family: Helvetica, sans-serif;
     background: lightskyblue;
@@ -41,6 +45,8 @@ body {
 }
 
 .base {
+    width: 300px;
+    height: 300px;
     margin-top: 20px;
 }
 
@@ -65,19 +71,30 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: black;
+    background-color: var(--ship-color);
     height: 60px;
 }
 
 .ship-body{
-    background-color: black;
-    border: 1px solid white;
+    width: 60px;
+    height: 60px;
+    background-color: var(--ship-color);
 }
 
 .ship-end{
     width: 60px;
     height: 60px;
-    background-color: black;
+    background-color: lightgrey;
+    position: relative;
+}
+.ship-end:after{
+    content: "";
+    width: 60px;
+    height: 60px;
+    background-color: var(--ship-color);
     clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    position: absolute;
+    top: 0;
+    left: 0;
     transform: rotate(90deg);
 }
