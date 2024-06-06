@@ -64,6 +64,23 @@ body {
 
 .ship{
     color: white;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    height: 60px;
+}
+
+.ship-body-block{
     background-color: black;
     border: 1px solid white;
+}
+
+.ship-body-point{
+    width: 0;
+    height: 0;
+    border-top: 30px solid transparent;
+    border-bottom: 30px solid transparent;
+    border-left: 30px solid black;
 }

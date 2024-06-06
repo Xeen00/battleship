@@ -193,10 +193,10 @@ function restartGame(){
 
 function logGame(){
     for (let field of attackFields) {
-        console.log("attack board:", field.ship, field.y, field.x);
+        console.log("attack board:", field);
     }
     for (let field of defenseFields) {
-        console.log("defense board", field.ship, field.y, field.x);
+        console.log("defense board", field);
     }
     for (let ship of ownFleetOfShips) {
         console.log("base fleet board", ship);
