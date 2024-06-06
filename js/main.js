@@ -116,8 +116,9 @@ function initializeShips(){
     for(let ship of ownFleetOfShips){
         console.log("start initialized ship: ", ship);
         ship.element.classList.add("ship");
+        ship.element.classList.add("ship-color-default");
         ship.element.setAttribute("draggable", "true");
-        ship.element.style.width = ship.length * 50 + "px";
+        ship.element.style.width = ship.length * 60 + "px";
         ship.element.innerHTML = ship.name;
         base.appendChild(ship.element);
 
@@ -132,7 +133,6 @@ function initializeShips(){
 
                 field.element.addEventListener("drop", function (event){
                     console.log("try placing:",selectedShip, "on the field:", field);
-                    //removeShip(selectedShip, defenseFields);
                     placeShip(field, selectedShip, defenseFields, true);
                     console.log("successfully placed:",selectedShip, "on the field:", field);
                     selectedShip = null;
@@ -240,7 +240,8 @@ function attack(x, y, fields){
             field.hit = true;
             if (field.ship != null) {
                 console.log("hit");
-                field.element.style.backgroundColor = "red";
+                field.element.classList.add("ship-color-hit");
+                field.element.classList.remove("ship-color-default");
                 attackScore++;
                 return true;
             } else {
@@ -279,6 +280,7 @@ function placeShip( field, selectedShip, fields, visible){
                 if (counter == selectedShip.length){
                     currentField.element.classList.add("ship-end");
                 }else {
+                    currentField.element.classList.add("ship-color-default");
                     currentField.element.classList.add("ship-body");
                 };
             }

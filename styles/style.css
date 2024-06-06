@@ -5,7 +5,7 @@
 
 body {
     font-family: Helvetica, sans-serif;
-    background: lightskyblue;
+    background: lightsteelblue;
     text-align: center;
 }
 
@@ -20,7 +20,7 @@ body {
 }
 
 .game-controls button:hover {
-    background-color: blue;
+    background-color: lightblue;
 }
 
 .main-container {
@@ -67,18 +67,17 @@ body {
 
 .ship{
     color: white;
-    text-align: center;
+    text-align: left;
+    font-size: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--ship-color);
     height: 60px;
 }
 
 .ship-body{
     width: 60px;
     height: 60px;
-    background-color: var(--ship-color);
 }
 
 .ship-end{
@@ -97,4 +96,11 @@ body {
     top: 0;
     left: 0;
     transform: rotate(90deg);
+}
+
+.ship-color-default {
+    background-color: var(--ship-color);
+}
+.ship-color-hit{
+    background-color: red;
 }
