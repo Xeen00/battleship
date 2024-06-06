@@ -1,24 +1,3 @@
-const ownFleetOfShips= [ship1 = new ship(document.createElement("div"), 1, "ship1"),
-    ship2 = new ship(document.createElement("div"), 2, "ship2"),
-    ship3 = new ship(document.createElement("div"), 3, "ship3"),
-    ship4 = new ship(document.createElement("div"), 4, "ship4"),
-    ship5 = new ship(document.createElement("div"), 5, "ship5")];
-const enemyFleetOfShips = [ship1 = new ship(document.createElement("div"), 1, "ship1"),
-    ship2 = new ship(document.createElement("div"), 2, "ship2"),
-    ship3 = new ship(document.createElement("div"), 3, "ship3"),
-    ship4 = new ship(document.createElement("div"), 4, "ship4"),
-    ship5 = new ship(document.createElement("div"), 5, "ship5")];
-const attackFields = [];
-const defenseFields = [];
-const defenseBoard = document.getElementById("defense-board");
-const attackBoard = document.getElementById("attack-board");
-const base = document.getElementById("shipbase");
-const defenseScoreBoard = document.getElementById("defense-score");
-const attackScoreBoard = document.getElementById("attack-score");
-let started = false;
-let defenseScore = 0;
-let attackScore = 0;
-
 class field {
     constructor(element, x, y, ship, hit) {
         this.element = element;
@@ -38,6 +17,32 @@ class ship {
     }
 }
 
+const ownFleetOfShips= [ship1 = new ship(document.createElement("div"), 1, "ship1"),
+    ship2 = new ship(document.createElement("div"), 2, "ship2"),
+    ship3 = new ship(document.createElement("div"), 3, "ship3"),
+    ship4 = new ship(document.createElement("div"), 4, "ship4"),
+    ship5 = new ship(document.createElement("div"), 5, "ship5")];
+const enemyFleetOfShips = [ship1 = new ship(document.createElement("div"), 1, "ship1"),
+    ship2 = new ship(document.createElement("div"), 2, "ship2"),
+    ship3 = new ship(document.createElement("div"), 3, "ship3"),
+    ship4 = new ship(document.createElement("div"), 4, "ship4"),
+    ship5 = new ship(document.createElement("div"), 5, "ship5")];
+
+const attackFields = [];
+const defenseFields = [];
+
+const defenseBoard = document.getElementById("defense-board");
+const attackBoard = document.getElementById("attack-board");
+
+const base = document.getElementById("shipbase");
+
+const defenseScoreBoard = document.getElementById("defense-score");
+const attackScoreBoard = document.getElementById("attack-score");
+
+let started = false;
+let defenseScore = 0;
+let attackScore = 0;
+
 document.addEventListener('DOMContentLoaded', () => {
     initializeDefenseBoard();
     initializeAttackBoard();
@@ -50,6 +55,7 @@ function initializeDefenseBoard(){
     for (let i = 0; i < 10; i++) {
         for (let j = 0; j < 10; j++) {
             defenseFields.push(new field(document.createElement("div"), i, j, null, false));
+
         }
     }
 
@@ -75,24 +81,23 @@ function initializeAttackBoard(){
         attackBoard.appendChild(field.element);
     }
 
-    initializeEnemyShips();
-
 }
 
 function initializeEnemyShips(){
-    for (let ship of enemyFleetOfShips) {
-        let x = getRandomInt(10);
-        let y = getRandomInt(10);
-        console.log(attackField[x * 10 + y]);
-        let field = attackField[x * 10 + y];
-        while (checkSpaces(ship.length, x, y, ship.orientation, attackFields) == false) {
-            x = getRandomInt(10);
-            y = getRandomInt(10);
-            field = defenseFields[x * 10 + y];
-        }
-        console.log(field);
-        placeShip(field, ship, defenseFields);
-    }
+    // for (let ship of enemyFleetOfShips) {
+    //     let x = getRandomInt(10);
+    //     let y = getRandomInt(10);
+    //     console.log(attackField());
+    //     console.log(attackField[x * 10 + y]);
+    //     let field = attackField[x * 10 + y];
+    //     while (checkSpaces(ship.length, x, y, ship.orientation, attackFields) == false) {
+    //         x = getRandomInt(10);
+    //         y = getRandomInt(10);
+    //         field = defenseFields[x * 10 + y];
+    //     }
+    //     console.log(field);
+    //     placeShip(field, ship, defenseFields);
+    // }
 }
 
 function initializeShips(){
@@ -113,9 +118,10 @@ function initializeShips(){
                 })
 
                 field.element.addEventListener("drop", function (event){
-                    console.log(selectedShip.length);
+                    console.log("try placing:",selectedShip, "on the field:", field);
                     removeShip(ship, defenseFields);
                     placeShip(field, selectedShip, defenseFields);
+                    console.log("successfully placed:",selectedShip, "on the field:", field);
                     selectedShip = null;
                 })
             }
@@ -125,23 +131,26 @@ function initializeShips(){
 
 
 function checkSpaces(size, x, y, orientation, fields){
+    console.log("start checking spaces", size, x, y, orientation, fields);
     let i = y;
-    console.log(i + size);
     if (i + size <= 10){
         for (let j = i; j < i + size; j++) {
-            console.log(j)
             if (fields[j].ship != null) {
+                console.log("space is occupied");
                 return false;
             }
         }
+        console.log("space is free");
         return true
     } else {
+        console.log("out of bounds")
         return false;
     }
 
 }
 
 function removeShip(ship, fields){
+    console.log("start removing ship", ship);
     let i = 0;
     while (i < fields.length && fields[i].ship != ship) {
         i++;
@@ -150,8 +159,10 @@ function removeShip(ship, fields){
         for (let j = i; j < i + ship.length; j++) {
             fields[j].ship = null;
             fields[j].element.style.backgroundColor = "lightgrey";
+            console.log("succesfully removed ship", ship, "from fields:", fields[j]);
         }
     }
+    console.log("ship not found in fields");
 }
 
 function startGame(){
@@ -255,9 +266,10 @@ function updateScoreBoard(){
 }
 
 function placeShip(field, selectedShip, fields){
-    // console.log(selectedShip.length);
-    console.log(field);
+    console.log("!INFUNCTION trying to place:", ship, "on the field:", field);
+
     if (field.ship === null && checkSpaces(selectedShip.length, field.x, field.y, selectedShip.orientation, fields)){
+        console.log("field is ready for placement")
         removeShip(selectedShip, fields);
         field.element.appendChild(selectedShip.element);
         for (let i = field.y; i < field.y + selectedShip.length; i++) {
