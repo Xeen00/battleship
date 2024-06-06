@@ -90,17 +90,18 @@ function initializeAttackBoard(){
 function initializeEnemyShips(){
     console.log("start initializing enemy ships");
     for (let ship of enemyFleetOfShips) {
-        console.log("start initialized ship: ", ship);
+        console.log("start initialized enemy ship: ", ship);
         let x = getRandomInt(10);
         let y = getRandomInt(10);
-        let field = attackField[x * 10 + y];
+        let field = attackFields[x * 10 + y];
+        console.log("try on field:", field);
         while (checkSpaces(ship.length, x, y, ship.orientation, attackFields) == false) {
             x = getRandomInt(10);
             y = getRandomInt(10);
-            field = defenseFields[x * 10 + y];
+            field = attackFields[x * 10 + y];
         }
         console.log(field);
-        placeShip(field, ship, defenseFields);
+        placeShip(field, ship, attackFields, false);
         console.log("finished initialized ship: ", ship);
     }
     console.log("finished initializing enemy ships");
@@ -126,8 +127,8 @@ function initializeShips(){
 
                 field.element.addEventListener("drop", function (event){
                     console.log("try placing:",selectedShip, "on the field:", field);
-                    removeShip(selectedShip, defenseFields);
-                    placeShip(field, selectedShip, defenseFields);
+                    //removeShip(selectedShip, defenseFields);
+                    placeShip(field, selectedShip, defenseFields, true);
                     console.log("successfully placed:",selectedShip, "on the field:", field);
                     selectedShip = null;
                 })
@@ -139,7 +140,7 @@ function initializeShips(){
 
 
 function checkSpaces(size, x, y, orientation, fields){
-    console.log("start checking spaces", size, x, y, orientation, fields);
+    console.log("start checking spaces", size, x, y);
     let i = y;
     if (i + size <= 10){
         for (let j = i; j < i + size; j++) {
@@ -186,25 +187,7 @@ function startGame(){
 }
 
 function restartGame(){
-    for (let field of defenseFields) {
-        field.ship = null;
-        field.hit = false;
-        field.element.innerHTML = "";
-        field.element.style.backgroundColor = "lightgrey";
-    }
-    for (let field of attackFields) {
-        field.ship = null;
-        field.hit = false;
-        field.element.innerHTML = "";
-        field.element.style.backgroundColor = "lightgrey";
-    }
-    initializeShips();
-    initializeEnemyShips();
-    defenseScore = 0;
-    attackScore = 0;
-    updateScoreBoard();
-    console.log("restart game");
-    started = false;
+    location.replace(location.href);
 }
 
 
@@ -276,7 +259,7 @@ function updateScoreBoard(){
     attackScoreBoard.innerHTML = defenseScore;
 }
 
-function placeShip(field, selectedShip, fields){
+function placeShip( field, selectedShip, fields, visible){
     console.log("!INFUNCTION trying to place:", selectedShip, "on the field:", field);
 
     if (field.ship === null && checkSpaces(selectedShip.length, field.x, field.y, selectedShip.orientation, fields)){
@@ -285,7 +268,9 @@ function placeShip(field, selectedShip, fields){
         field.element.appendChild(selectedShip.element);
         for (let i = field.y; i < field.y + selectedShip.length; i++) {
             fields[field.x * 10 + i].ship = selectedShip;
-            fields[field.x * 10 + i].element.style.backgroundColor = "black";
+            if (visible){
+                fields[field.x * 10 + i].element.style.backgroundColor = "black";
+            }
 
         }
         field.ship = selectedShip;
@@ -293,16 +278,16 @@ function placeShip(field, selectedShip, fields){
 }
 
 function placeShipRandom(){
-    restartGame();
     for (let ship of ownFleetOfShips) {
-        let x = getRandomInt(10);
-        let y = getRandomInt(10);
+        let x = getRandomInt(9);
+        let y = getRandomInt(9);
         let field = defenseFields[x * 10 + y];
-        while (checkSpaces(ship.length, x, y, ship.orientation, defenseFields) == false) {
+        console.log("start random placing ship:", ship, "on the field:", field);
+        while (checkSpaces(ship.length, x, y, ship.orientation, defenseFields) === false) {
             x = getRandomInt(10);
             y = getRandomInt(10);
             field = defenseFields[x * 10 + y];
         }
-        placeShip(field, ship, defenseFields);
+        placeShip(field, ship, defenseFields, true);
     }
 }
