@@ -1,5 +1,5 @@
 class field {
-    constructor(element, x, y, ship, hit) {
+    constructor(element, x, y) {
         this.element = element;
         this.x = x;
         this.y = y;
@@ -46,7 +46,7 @@ let attackScore = 0;
 document.addEventListener('DOMContentLoaded', () => {
     initializeDefenseBoard();
     initializeAttackBoard();
-    initializeShips();
+    //initializeShips();
     initializeEnemyShips();
     });
 
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function initializeDefenseBoard(){
     for (let i = 0; i < 10; i++) {
         for (let j = 0; j < 10; j++) {
-            defenseFields.push(new field(document.createElement("div"), i, j, null, false));
+            defenseFields.push(new field(document.createElement("div"), i, j));
 
         }
     }
@@ -66,9 +66,12 @@ function initializeDefenseBoard(){
 }
 
 function initializeAttackBoard(){
+    console.log("start initializing attack board");
     for (let i = 0; i < 10; i++) {
         for (let j = 0; j < 10; j++) {
-            attackFields.push(new field(document.createElement("div"), i, j, null, false));
+            console.log("start initializing field:", i, j);
+            attackFields.push(i * 10 + j);
+            console.log("finished initializing field:", attackField(i * 10 +j));
         }
     }
 
@@ -84,20 +87,22 @@ function initializeAttackBoard(){
 }
 
 function initializeEnemyShips(){
-    // for (let ship of enemyFleetOfShips) {
-    //     let x = getRandomInt(10);
-    //     let y = getRandomInt(10);
-    //     console.log(attackField());
-    //     console.log(attackField[x * 10 + y]);
-    //     let field = attackField[x * 10 + y];
-    //     while (checkSpaces(ship.length, x, y, ship.orientation, attackFields) == false) {
-    //         x = getRandomInt(10);
-    //         y = getRandomInt(10);
-    //         field = defenseFields[x * 10 + y];
-    //     }
-    //     console.log(field);
-    //     placeShip(field, ship, defenseFields);
-    // }
+    console.log("start initializing enemy ships");
+    for (let ship of enemyFleetOfShips) {
+        console.log("start initialized ship: ", ship);
+        let x = getRandomInt(10);
+        let y = getRandomInt(10);
+        let field = attackField[x * 10 + y];
+        while (checkSpaces(ship.length, x, y, ship.orientation, attackFields) == false) {
+            x = getRandomInt(10);
+            y = getRandomInt(10);
+            field = defenseFields[x * 10 + y];
+        }
+        console.log(field);
+        placeShip(field, ship, defenseFields);
+        console.log("finished initialized ship: ", ship);
+    }
+    console.log("finished initializing enemy ships");
 }
 
 function initializeShips(){
@@ -287,6 +292,7 @@ function placeShip(field, selectedShip, fields){
 }
 
 function placeShipRandom(){
+    restartGame();
     for (let ship of ownFleetOfShips) {
         let x = getRandomInt(10);
         let y = getRandomInt(10);
