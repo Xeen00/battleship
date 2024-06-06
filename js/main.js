@@ -101,15 +101,16 @@ function initializeEnemyShips(){
 }
 
 function initializeShips(){
-    for(ship of ownFleetOfShips){
+    for(let ship of ownFleetOfShips){
+        console.log("start initialized ship: ", ship);
         ship.element.classList.add("ship");
         ship.element.setAttribute("draggable", "true");
         ship.element.style.width = ship.length * 50 + "px";
         ship.element.innerHTML = ship.name;
         base.appendChild(ship.element);
-        console.log(ship);
 
         ship.element.addEventListener("dragstart", function (event){
+            console.log("start dragging:", ship);
             let selectedShip = ship;
             for (let field of defenseFields) {
 
@@ -119,13 +120,14 @@ function initializeShips(){
 
                 field.element.addEventListener("drop", function (event){
                     console.log("try placing:",selectedShip, "on the field:", field);
-                    removeShip(ship, defenseFields);
+                    removeShip(selectedShip, defenseFields);
                     placeShip(field, selectedShip, defenseFields);
                     console.log("successfully placed:",selectedShip, "on the field:", field);
                     selectedShip = null;
                 })
             }
         })
+        console.log("finished initialized ship: ", ship);
     }
 }
 
@@ -202,10 +204,13 @@ function restartGame(){
 
 function logGame(){
     for (let field of attackFields) {
-        console.log("attack", field.ship, field.y, field.x);
+        console.log("attack board:", field.ship, field.y, field.x);
     }
     for (let field of defenseFields) {
-        console.log("defense", field.ship, field.y, field.x);
+        console.log("defense board", field.ship, field.y, field.x);
+    }
+    for (let ship of ownFleetOfShips) {
+        console.log("base fleet board", ship);
     }
 }
 
