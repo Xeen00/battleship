@@ -8,21 +8,26 @@
     <body>
         <h1>Battleship</h1>
         <p>Place your boats on the board and start the game</p>
-        <button id="start-game" onclick="startGame()">Start game</button>
-        <button id="restart-game" onclick="restartGame()">Restart game</button>
-        <button id="log-game" onclick="logGame()">Log game</button>
+        <div class="game-controls">
+            <button id="start-game" onclick="startGame()">Start Game</button>
+            <button id="restart-game" onclick="restartGame()">Restart Game</button>
+            <button id="log-game" onclick="logGame()">Log Game</button>
+            <button id="place-ship-random" onclick="placeShipRandom()">Place Ship Randomly</button>
+        </div>
         <div class="main-container">
             <div class="center-container">
-                <h2 id="defense-score">0</h2>
+                <h2>Defense Board</h2>
+                <span id="defense-score">Score: 0</span>
                 <div class="board-container" id="defense-board"></div>
                 <div id="shipbase" class="base"></div>
-                <button id="place-ship-random" onclick="placeShipRandom()">Place ship random</button>
             </div>
             <div class="center-container">
-                <h2 id="attack-score">0</h2>
+                <h2>Attack Board</h2>
+                <span id="attack-score">Score: 0</span>
                 <div class="board-container" id="attack-board"></div>
             </div>
         </div>
+
         <script src="js/main.js"></script>
     </body>
 </html>

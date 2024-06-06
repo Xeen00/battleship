@@ -1,56 +1,50 @@
+/* styles/style.css */
 body {
-    background-color: powderblue;
-    flex: auto;
-    font-family: Arial;
+    font-family: Helvetica, sans-serif;
+    background: lightskyblue;
+    text-align: center;
 }
 
-.main-container{
-    display: flex;
-    justify-content: space-around;
-}
-
-.center-container{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.base{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 600px;
-    height: 100px;
-    background-color: lightgrey;
-    border-style: solid;
-    border-width: 1px;
-    border-color: black;
-
-}
-
-.ship {
-    background-color: black;
+.game-controls button {
+    margin: 5px;
+    padding: 10px 20px;
+    background-color: navy;
     color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.game-controls button:hover {
+    background-color: blue;
+}
+
+.main-container {
     display: flex;
     justify-content: center;
-    align-items: center;
-    width: 58px;
-    height: 58px;
+    margin-top: 20px;
+}
+
+.center-container {
+    margin: 0 20px;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .board-container {
     display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: repeat(10, 1fr);
-    gap: 5px;
-    width: 670px;
-    height: 670px;
+    grid-template-columns: repeat(10, 60px);
+    grid-template-rows: repeat(10, 60px);
+    gap: 2px;
+}
+
+.base {
+    margin-top: 20px;
 }
 
 .field {
-    height: 60px;
-    width: 60px;
     background-color: lightgrey;
     border-style: solid;
     border-width: 1px;
@@ -62,10 +56,14 @@ body {
     font-size: 20px;
 }
 
-#defense-board{
-    background-color: lightgreen;
+
+#defense-score, #attack-score {
+    font-size: 20px;
+    font-weight: bold;
 }
 
-#attack-board{
-    background-color: lightcoral;
+.ship{
+    color: white;
+    background-color: black;
+    border: 1px solid white;
 }
