@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <title>Drag&Drop Test</title>
         <style>
-            .draggable, .hover {
+            .draggable{
                 content: "Drop here";
                 width: 100px;
                 height: 100px;
@@ -13,7 +13,19 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                margin: 10px;
+                cursor: pointer;
+                text-align: justify-all;
+            }
+
+            .hover {
+                content: "Drop here";
+                width: 100px;
+                height: 100px;
+                background-color: blue;
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 cursor: pointer;
             }
             .dropzone {
@@ -27,7 +39,7 @@
             }
 
 
-            .onDrag{
+            .onDragOver{
                 background-color: transparent;
             }
         </style>

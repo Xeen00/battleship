@@ -1,33 +1,41 @@
 document.addEventListener('DOMContentLoaded', () => {
     const draggable = document.getElementById('draggable');
-    const dropzones = document.querySelectorAll('.dropzone');
+
+    let dragImg;
 
     draggable.addEventListener('dragstart', (e) => {
-        e.dataTransfer.setData('text/plain', e.target.id);
-        draggable.classList.add('onDrag');
+        dragImg = createDragImage("Initial Text");
+        document.body.appendChild(dragImg);
+        e.dataTransfer.setDragImage(dragImg, 50, 50);
     });
 
-    draggable.addEventListener('dragend', (e) => {
-        e.dataTransfer.setData('text/plain', e.target.id);
-        draggable.classList.remove('onDrag');
+    draggable.addEventListener('drag', (e) => {
+        if (dragImg) {
+            document.body.removeChild(dragImg);
+        }
+        dragImg = createDragImage("Dragging at (" + e.clientX + ", " + e.clientY + ")");
+        document.body.appendChild(dragImg);
+        e.dataTransfer.setDragImage(dragImg, 50, 50);
     });
 
-    dropzones.forEach(dropzone => {
-        dropzone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            dropzone.classList.add('hover');
-        });
-
-        dropzone.addEventListener('dragleave', (e) => {
-            dropzone.classList.remove('hover');
-        });
-
-        dropzone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            const data = e.dataTransfer.getData('text/plain');
-            const draggable = document.getElementById(data);
-            dropzone.appendChild(draggable);
-            dropzone.classList.remove('hover');
-        });
+    draggable.addEventListener('dragend', () => {
+        if (dragImg) {
+            document.body.removeChild(dragImg);
+        }
     });
+
+    function createDragImage(text) {
+        const img = document.createElement('div');
+        img.style.width = '100px';
+        img.style.height = '100px';
+        img.style.backgroundColor = 'red';
+        img.innerHTML = text;
+        img.style.color = 'white';
+        img.style.display = 'flex';
+        img.style.alignItems = 'center';
+        img.style.justifyContent = 'center';
+        img.style.position = 'absolute';
+        img.style.top = '-120px';
+        return img;
+    }
 });
