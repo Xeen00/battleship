@@ -15,6 +15,7 @@ class Ship {
         this.orientation = "horizontal";
         this.name = name;
     }
+
 }
 
 const ownFleetOfShips= [ship1 = new Ship(document.createElement("div"), 1, "ship1"),
