@@ -18,21 +18,19 @@ class Ship {
 
 }
 
-const ownFleetOfShips= [ship1 = new Ship(document.createElement("div"), 1, "ship1"),
-    ship2 = new Ship(document.createElement("div"), 2, "ship2"),
-    ship3 = new Ship(document.createElement("div"), 3, "ship3"),
-    ship4 = new Ship(document.createElement("div"), 4, "ship4"),
-    ship5 = new Ship(document.createElement("div"), 5, "ship5")];
-const enemyFleetOfShips = [ship1 = new Ship(document.createElement("div"), 1, "ship1"),
-    ship2 = new Ship(document.createElement("div"), 2, "ship2"),
-    ship3 = new Ship(document.createElement("div"), 3, "ship3"),
-    ship4 = new Ship(document.createElement("div"), 4, "ship4"),
-    ship5 = new Ship(document.createElement("div"), 5, "ship5")];
+const ownFleetOfShips= [new Ship(document.createElement("div"), 1, "ship1"),
+    new Ship(document.createElement("div"), 2, "ship2"),
+    new Ship(document.createElement("div"), 3, "ship3"),
+    new Ship(document.createElement("div"), 4, "ship4"),
+    new Ship(document.createElement("div"), 5, "ship5")];
+const enemyFleetOfShips = [new Ship(document.createElement("div"), 1, "ship1"),
+    new Ship(document.createElement("div"), 2, "ship2"),
+    new Ship(document.createElement("div"), 3, "ship3"),
+    new Ship(document.createElement("div"), 4, "ship4"),
+    new Ship(document.createElement("div"), 5, "ship5")];
 
 let defenseFields = [];
 let attackFields = [];
-
-
 
 const defenseBoard = document.getElementById("defense-board");
 const attackBoard = document.getElementById("attack-board");
@@ -88,7 +86,6 @@ function updateScoreBoard(){
 }
 
 function gameLoop() {
-
     if (!started) {
         console.log("Waiting to start the game");
         requestAnimationFrame(gameLoop);
@@ -223,23 +220,31 @@ function initializeShips(){
 }
 
 
-function checkSpaces(size, x, y, orientation, fields){
+function checkSpaces(size, x, y, orientation, fields) {
     console.log("start checking spaces", size, x, y);
-    let i = y;
-    if (i + size <= 10){
-        for (let j = i; j < i + size; j++) {
-            if (fields[j].ship != null) {
-                console.log("space is occupied");
-                return false;
-            }
-        }
-        console.log("space is free");
-        return true
-    } else {
-        console.log("out of bounds")
+
+    if ((orientation === "horizontal" && x + size > 10) || (orientation === "vertical" && y + size > 10)) {
+        console.log("out of bounds");
         return false;
     }
 
+    let startX = x - 1 < 0 ? 0 : x - 1;
+    let startY = y - 1 < 0 ? 0 : y - 1;
+
+    let endX = x + size + 1;
+    let endY = y + 1;
+
+    for (let i = startY; i < endY; i++) {
+        for (let j = startX; j < endX; j++) {
+            if (fields[i * 10 + j].ship != null) {
+                console.log("space is occupied or too close to another ship");
+                return false;
+            }
+        }
+    }
+
+    console.log("space is free");
+    return true;
 }
 
 function removeShip(ship, fields){
