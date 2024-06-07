@@ -51,7 +51,10 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function gameLoop() {
-
+    if (started){
+        getAttacked();
+    }
+    setTimeout(gameLoop, 1000);
 }
 
 function initializeDefenseBoard(){
@@ -174,6 +177,7 @@ function removeShip(ship, fields){
             fields[j].ship = null;
             fields[j].element.classList.remove("ship-body");
             fields[j].element.classList.remove("ship-end");
+            fields[j].element.classList.remove("ship-color-default");
             fields[j].element.classList.add("field");
             console.log("succesfully removed ship", ship, "from fields:", fields[j]);
         }
