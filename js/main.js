@@ -87,12 +87,19 @@ function updateScoreBoard(){
 }
 
 function gameLoop() {
-    while (started && !checkGameOver()){
+
+    if (!started) {
+        console.log("Waiting to start the game");
+        requestAnimationFrame(gameLoop);
+    } else if (!checkGameOver()) {
+        console.log("game loop make move");
         makeMove();
+        console.log("game loop get attacked");
         getAttacked();
+        console.log("game loop update score board");
+        setTimeout(gameLoop, 1000);
+        requestAnimationFrame(gameLoop);
     }
-    setTimeout(gameLoop, 1000);
-    gameLoop();
 }
 
 function checkGameOver(){
@@ -137,6 +144,8 @@ function initializeAttackBoard(){
             event.preventDefault();
             if (myTurn){
                 if (attack(field.x, field.y, attackFields)){
+                    myTurn = true;
+                }else {
                     myTurn = false;
                 }
             }
@@ -260,7 +269,7 @@ function getAttacked(){
         let x = getRandomInt(10);
         let y = getRandomInt(10);
     }while (!defenseFields[x * 10 + y].hit);
-
+    console.log("get attacked on field:", x, y, defenseFields[x * 10 + y]);
     if (attack(x, y, defenseFields)){
         if (attack(x, y -1, defenseFields)){
 
