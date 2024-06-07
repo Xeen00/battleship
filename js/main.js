@@ -31,6 +31,8 @@ const enemyFleetOfShips = [ship1 = new Ship(document.createElement("div"), 1, "s
 let defenseFields = [];
 let attackFields = [];
 
+
+
 const defenseBoard = document.getElementById("defense-board");
 const attackBoard = document.getElementById("attack-board");
 
@@ -39,7 +41,9 @@ const base = document.getElementById("shipbase");
 const defenseScoreBoard = document.getElementById("defense-score");
 const attackScoreBoard = document.getElementById("attack-score");
 
+let winScore = 0;
 let started = false;
+let myTurn = true;
 let defenseScore = 0;
 let attackScore = 0;
 
@@ -48,13 +52,58 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeAttackBoard();
     initializeShips();
     initializeEnemyShips();
+    calculateWinScore();
+    gameLoop();
 });
 
+function startGame(){
+    if (!started && base.children.length == 0){
+        started = true;
+        fixShips();
+        console.log("start game");
+    }else if (started) {
+        console.log("already started");
+    }else {
+        console.log("place all ships");
+    }
+}
+
+function calculateWinScore(){
+    winScore = 0;
+    for (let ship of enemyFleetOfShips) {
+        winScore += ship.length;
+    }
+}
+
+function fixShips(){
+    for(ship of ownFleetOfShips){
+        ship.element.setAttribute("draggable", "false");
+    }
+}
+
+function updateScoreBoard(){
+    defenseScoreBoard.innerHTML = attackScore;
+    attackScoreBoard.innerHTML = defenseScore;
+}
+
 function gameLoop() {
-    if (started){
+    while (started && !checkGameOver()){
+        makeMove();
         getAttacked();
     }
     setTimeout(gameLoop, 1000);
+    gameLoop();
+}
+
+function checkGameOver(){
+    if (defenseScore == winScore){
+        console.log("game over, you won");
+        return true;
+    }else if (attackScore == winScore){
+        console.log("game over, you lost");
+        return true;
+    }
+    return false;
 }
 
 function initializeDefenseBoard(){
@@ -86,13 +135,30 @@ function initializeAttackBoard(){
         field.element.classList.add("field");
         field.element.addEventListener("mousedown", function (event) {
             event.preventDefault();
-            if (!attack(field.x, field.y, attackFields)){
-                getAttacked();
-            };
+            if (myTurn){
+                if (attack(field.x, field.y, attackFields)){
+                    myTurn = false;
+                }
+            }
         })
         attackBoard.appendChild(field.element);
     }
+}
 
+function restartGame(){
+    location.replace(location.href);
+}
+
+function logGame(){
+    for (let field of attackFields) {
+        console.log("attack board:", field);
+    }
+    for (let field of defenseFields) {
+        console.log("defense board", field);
+    }
+    for (let ship of ownFleetOfShips) {
+        console.log("base fleet board", ship);
+    }
 }
 
 function initializeEnemyShips(){
@@ -185,35 +251,6 @@ function removeShip(ship, fields){
     console.log("ship not found in fields");
 }
 
-function startGame(){
-    if (!started && base.children.length == 0){
-        started = true;
-        fixShips();
-        console.log("start game");
-    }else if (started) {
-        console.log("already started");
-    }else {
-        console.log("place all ships");
-    }
-}
-
-function restartGame(){
-    location.replace(location.href);
-}
-
-
-function logGame(){
-    for (let field of attackFields) {
-        console.log("attack board:", field);
-    }
-    for (let field of defenseFields) {
-        console.log("defense board", field);
-    }
-    for (let ship of ownFleetOfShips) {
-        console.log("base fleet board", ship);
-    }
-}
-
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
@@ -229,12 +266,11 @@ function getAttacked(){
 
         }
     }
-
     updateScoreBoard();
 }
 
-function attackField(x, y){
-    attack(x, y, attackFields);
+function makeMove(){
+
 }
 
 function attack(x, y, fields){
@@ -256,17 +292,6 @@ function attack(x, y, fields){
         }
     }
     updateScoreBoard();
-}
-
-function fixShips(){
-    for(ship of ownFleetOfShips){
-        ship.element.setAttribute("draggable", "false");
-    }
-}
-
-function updateScoreBoard(){
-    defenseScoreBoard.innerHTML = attackScore;
-    attackScoreBoard.innerHTML = defenseScore;
 }
 
 function placeShip( field, selectedShip, fields, visible){
