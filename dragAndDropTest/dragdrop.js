@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const draggable = document.getElementById('draggable');
     const dropzones = document.getElementsByClassName('dropzone');
-    let dragImg;
+    let dragImg = null
 
 
 
@@ -29,12 +29,21 @@ document.addEventListener('DOMContentLoaded', () => {
     for (let dropzone of dropzones) {
         dropzone.addEventListener('dragover', (e) => {
             e.preventDefault();
-            dragImg.draggable.style.opacity = 0;
+            //console.log(dragImg);
+            dragImg.style.opacity = '0.2';
+            dropzone.classList.add('hover');
             dropzone.style.borderColor = 'green';
+        });
+
+        dropzone.addEventListener('dragenter', (e) => {
+            console.log(dragImg);
+            const d = document.getElementById('dragImg');
+            d.style.backgroundColor = 'red';
         });
 
         dropzone.addEventListener('dragleave', (e) => {
             dropzone.style.borderColor = 'grey';
+            dropzone.classList.remove('hover');
             draggable.style.opacity = 1;
         });
 
@@ -50,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function createDragImage(text) {
         const img = document.createElement('div');
+        img.id = 'dragImg';
         img.style.width = '100px';
         img.style.height = '100px';
         img.style.backgroundColor = 'blue';
