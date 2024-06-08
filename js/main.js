@@ -223,7 +223,7 @@ function initializeShips(){
 function checkSpaces(size, x, y, orientation, fields) {
     console.log("start checking spaces", size, x, y);
 
-    if ((orientation === "horizontal" && x + size > 10) || (orientation === "vertical" && y + size > 10)) {
+    if (y + size > 10) {
         console.log("out of bounds");
         return false;
     }
