@@ -1,26 +1,40 @@
 /* styles/style.css */
 :root {
-    --ship-color: #293133;
+    --dark-navy: #003366;
+    --metallic-grey: #4B5D67;
+    --vibrant-red: #D62828;
+    --light-grey: #CCCCCC;
+    --rich-orange: #F77F00;
+    --emerald-green: #2D6A4F;
+
+    --light-dark-navy: #336699;
+    --light-metallic-grey: #7A8B99;
+    --light-vibrant-red: #E76F51;
+    --light-light-grey: #E0E0E0;
+    --light-rich-orange: #FFA040;
+    --light-emerald-green: #5A8A67;
 }
 
 body {
     font-family: Helvetica, sans-serif;
-    background: lightsteelblue;
+    background: var(--light-light-grey);
     text-align: center;
 }
 
 .game-controls button {
-    margin: 5px;
     padding: 10px 20px;
-    background-color: navy;
+    font-size: 16px;
     color: white;
     border: none;
     border-radius: 5px;
+    background: linear-gradient(to right, var(--emerald-green) 0%, var(--light-emerald-green) 100%);
     cursor: pointer;
+    outline: none;
+    transition: background 0.4s, transform 0.2s;
 }
-
 .game-controls button:hover {
-    background-color: lightblue;
+    background: linear-gradient(to right, var(--emerald-green) 0%, var(--light-emerald-green) 100%);
+    transform: scale(1.05);
 }
 
 .main-container {
