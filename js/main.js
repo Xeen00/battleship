@@ -176,7 +176,7 @@ function initializeEnemyShips(){
         let y = getRandomInt(10);
         let field = attackFields[x * 10 + y];
         console.log("try on field:", field);
-        while (checkSpaces(ship.length, x, y, ship.orientation, attackFields) == false) {
+        while (checkSpaces(ship, x, y, attackFields) == false) {
             x = getRandomInt(10);
             y = getRandomInt(10);
             field = attackFields[x * 10 + y];
@@ -220,7 +220,8 @@ function initializeShips(){
 }
 
 
-function checkSpaces(size, x, y, orientation, fields) {
+function checkSpaces(ship, x, y, fields) {
+    let size = ship.length;
     console.log("start checking spaces", size, x, y);
 
     if (y + size > 10) {
@@ -231,14 +232,16 @@ function checkSpaces(size, x, y, orientation, fields) {
     let startX = x - 1 < 0 ? 0 : x - 1;
     let startY = y - 1 < 0 ? 0 : y - 1;
 
-    let endX = x + size + 1;
-    let endY = y + 1;
+    let endX = x + 1;
+    let endY = y + size + 1;
 
-    for (let i = startY; i < endY; i++) {
-        for (let j = startX; j < endX; j++) {
+    for (let i = startX; i < endX; i++) {
+        for (let j = startY; j < endY; j++) {
             if (fields[i * 10 + j].ship != null) {
-                console.log("space is occupied or too close to another ship");
-                return false;
+                if (fields[i * 10 + j].ship != ship) {
+                    return false;
+                    console.log("space is occupied or too close to another ship");
+                }
             }
         }
     }
@@ -312,7 +315,7 @@ function attack(x, y, fields){
 function placeShip( field, selectedShip, fields, visible){
     console.log("!INFUNCTION trying to place:", selectedShip, "on the field:", field);
 
-    if (field.ship === null && checkSpaces(selectedShip.length, field.x, field.y, selectedShip.orientation, fields)){
+    if (field.ship === null && checkSpaces(selectedShip, field.x, field.y, fields)){
         console.log("field is ready for placement")
         removeShip(selectedShip, fields);
         field.element.appendChild(selectedShip.element);
@@ -341,7 +344,7 @@ function placeShipRandom(){
             let y = getRandomInt(9);
             let field = defenseFields[x * 10 + y];
             console.log("start random placing ship:", ship, "on the field:", field);
-            while (checkSpaces(ship.length, x, y, ship.orientation, defenseFields) === false) {
+            while (checkSpaces(ship, x, y, defenseFields) === false) {
                 x = getRandomInt(10);
                 y = getRandomInt(10);
                 field = defenseFields[x * 10 + y];
