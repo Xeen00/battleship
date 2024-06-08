@@ -13,6 +13,8 @@
     --light-light-grey: #E0E0E0;
     --light-rich-orange: #FFA040;
     --light-emerald-green: #5A8A67;
+    --light-ocean-water: #6699CC;
+    --light-text: #F0F0F0;
 }
 
 body {
@@ -25,16 +27,24 @@ body {
     padding: 10px 20px;
     font-size: 16px;
     color: white;
+    background: linear-gradient(to right, var(--light-rich-orange) 0%, var(--light-vibrant-red) 100%);
     border: none;
     border-radius: 5px;
-    background: linear-gradient(to right, var(--emerald-green) 0%, var(--light-emerald-green) 100%);
-    cursor: pointer;
     outline: none;
-    transition: background 0.4s, transform 0.2s;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
+
 .game-controls button:hover {
-    background: linear-gradient(to right, var(--emerald-green) 0%, var(--light-emerald-green) 100%);
+    background: linear-gradient(to right, var(--rich-orange) 0%, var(--vibrant-red) 100%);
     transform: scale(1.05);
+}
+
+.game-controls button:active {
+    background: linear-gradient(to right, var(--emerald-green) 0%, var(--light-emerald-green) 100%);
+    transform: scale(0.95);
+    animation: ease-in-out;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
 }
 
 .main-container {
@@ -65,8 +75,8 @@ body {
 }
 
 .field {
-    background-color: lightgrey;
-    color: white;
+    background-color: var(--light-ocean-water);
+    color: var(--light-text);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -80,7 +90,7 @@ body {
 }
 
 .ship{
-    color: white;
+    color: var(--light-text);
     text-align: left;
     font-size: 20px;
     display: flex;
@@ -97,14 +107,14 @@ body {
 .ship-end{
     width: 60px;
     height: 60px;
-    background-color: lightgrey;
+    background-color: var(--light-ocean-water);
     position: relative;
 }
 .ship-end:after{
     content: "";
     width: 60px;
     height: 60px;
-    background-color: var(--ship-color);
+    background-color: var(--metallic-grey);
     clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
     position: absolute;
     top: 0;
@@ -113,7 +123,7 @@ body {
 }
 
 .ship-color-default {
-    background-color: var(--ship-color);
+    background-color: var(--metallic-grey);
 }
 .ship-color-hit{
     background-color: red;
