@@ -9,20 +9,18 @@ document.addEventListener('DOMContentLoaded', () => {
         dragImg = createDragImage("");
         document.body.appendChild(dragImg);
         e.dataTransfer.setDragImage(dragImg, 50, 50);
+        dragImg = createDragImage("Dragging at (" + e.clientX + ", " + e.clientY + ")");
+        document.body.appendChild(dragImg);
     });
 
     draggable.addEventListener('drag', (e) => {
-        if (dragImg) {
-            document.body.removeChild(dragImg);
-        }
-        dragImg = createDragImage("Dragging at (" + e.clientX + ", " + e.clientY + ")");
-        document.body.appendChild(dragImg);
         e.dataTransfer.setDragImage(dragImg, 50, 50);
+        dragImg.innerHTML = "Dragging at (" + e.clientX + ", " + e.clientY + ")";
     });
 
     draggable.addEventListener('dragend', () => {
         if (dragImg) {
-            document.body.removeChild(dragImg);
+            //document.body.removeChild(dragImg);
         }
     });
 
@@ -30,15 +28,14 @@ document.addEventListener('DOMContentLoaded', () => {
         dropzone.addEventListener('dragover', (e) => {
             e.preventDefault();
             //console.log(dragImg);
-            dragImg.style.opacity = '0.2';
-            dropzone.classList.add('hover');
-            dropzone.style.borderColor = 'green';
+            // dropzone.classList.add('hover');
+            // dropzone.style.borderColor = 'green';
         });
 
         dropzone.addEventListener('dragenter', (e) => {
             console.log(dragImg);
             const d = document.getElementById('dragImg');
-            d.style.backgroundColor = 'red';
+            d.classList.add('onDragOver');
         });
 
         dropzone.addEventListener('dragleave', (e) => {
@@ -69,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
         img.style.alignItems = 'center';
         img.style.justifyContent = 'center';
         img.style.position = 'absolute';
-        img.style.top = '-120px';
+        img.style.top = '120px';
         return img;
     }
 });
