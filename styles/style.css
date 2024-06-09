@@ -86,8 +86,9 @@ body {
     font-size: 20px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: left;
     height: 60px;
+    border-radius: 5px;
 }
 
 .ship-body{
@@ -95,11 +96,23 @@ body {
     height: 60px;
 }
 
+.ship-start{
+    width: 60px;
+    height: 60px;
+    background-color: var(--light-ocean-water);
+    position: relative;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+
 .ship-end{
     width: 60px;
     height: 60px;
     background-color: var(--light-ocean-water);
     position: relative;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 .ship-end:after{
     content: "";
@@ -135,17 +148,25 @@ body {
     user-select: none;
 }
 
-.field:active:before {
-    content: "";
+.field::before, .field::after {
+    content: '';
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 20px;
-    height: 20px;
-    background: rgba(255, 255, 255, 0.5);
+    width: 10px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.7);
     border-radius: 50%;
     transform: translate(-50%, -50%) scale(0);
-    animation: ripple-effect 0.2s ease-out;
+    opacity: 0;
+}
+
+.field:active::before {
+    animation: ripple-effect 0.3s 0s ease-out;
+}
+
+.field:active::after {
+    animation: ripple-effect 0.5s 0.1s ease-out;
 }
 
 @keyframes ripple-effect {

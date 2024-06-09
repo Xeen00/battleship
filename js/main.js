@@ -18,11 +18,11 @@ class Ship {
 
 }
 
-const ownFleetOfShips= [new Ship(document.createElement("div"), 1, "ship1"),
-    new Ship(document.createElement("div"), 2, "ship2"),
-    new Ship(document.createElement("div"), 3, "ship3"),
-    new Ship(document.createElement("div"), 4, "ship4"),
-    new Ship(document.createElement("div"), 5, "ship5")];
+const ownFleetOfShips= [new Ship(document.createElement("div"), 1, "S1"),
+    new Ship(document.createElement("div"), 2, " S2"),
+    new Ship(document.createElement("div"), 3, " S3"),
+    new Ship(document.createElement("div"), 4, "S4"),
+    new Ship(document.createElement("div"), 5, " S5")];
 const enemyFleetOfShips = [new Ship(document.createElement("div"), 1, "ship1"),
     new Ship(document.createElement("div"), 2, "ship2"),
     new Ship(document.createElement("div"), 3, "ship3"),
@@ -327,10 +327,14 @@ function placeShip( field, selectedShip, fields, visible){
             if (visible & selectedShip.length > 1){
                 if (counter == selectedShip.length){
                     currentField.element.classList.add("ship-end");
-                }else {
+                } else if (counter == 1){
+                    currentField.element.classList.add("ship-color-default");
+                    currentField.element.classList.add("ship-start");
+                } else {
                     currentField.element.classList.add("ship-color-default");
                     currentField.element.classList.add("ship-body");
                 };
+                currentField.element.classList.remove("field");
             }
             counter++;
         }
