@@ -44,10 +44,11 @@ const attackScoreBoard = document.getElementById("attack-score");
 let winScore = 0;
 let started = false;
 let myTurn = true;
-let defenseScore = 0;
+let defenseScore = 10;
 let attackScore = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
+    updateScoreBoard();
     initializeDefenseBoard();
     initializeAttackBoard();
     initializeShips();
@@ -84,6 +85,7 @@ function fixShips(){
 function updateScoreBoard(){
     defenseScoreBoard.innerHTML = attackScore;
     attackScoreBoard.innerHTML = defenseScore;
+    updateProgressBar();
 }
 
 function gameLoop() {
@@ -362,15 +364,12 @@ function placeShipRandom(){
     }
 }
 
-document.getElementById('field').addEventListener('click', function(e) {
-    var x = e.clientX - e.target.offsetLeft;
-    var y = e.clientY - e.target.offsetTop;
-    var ripple = document.createElement('span');
-    ripple.style.left = x + 'px';
-    ripple.style.top = y + 'px';
-    ripple.classList.add('ripple');
-    this.appendChild(ripple);
-    setTimeout(() => {
-        ripple.remove();
-    }, 1000);
-});
+
+function updateProgressBar() {
+    const progressBarEnemy = document.getElementById('progressBarEnemy');
+    progressBarEnemy.style.width = ((defenseScore / winScore) * 100) + '%';
+    progressBarEnemy.textContent = `${defenseScore}/25`;
+    const progressBarYou = document.getElementById('progressBarYou');
+    progressBarYou.style.width = ((attackScore / winScore) * 100) + '%';
+    progressBarYou.textContent = `${attackScore}/25`;
+}

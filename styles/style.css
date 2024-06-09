@@ -233,3 +233,17 @@ body {
 .info p {
     margin: 5px;
 }
+
+#progressBarContainer {
+    width: 100%;
+    background-color: red;
+}
+
+#progressBarYou, #progressBarEnemy {
+    width: 90%;
+    height: 30px;
+    background-color: green;
+    text-align: center;
+    line-height: 30px;
+    color: white;
+}
