@@ -148,10 +148,12 @@ function initializeAttackBoard(){
             if (turnManager.myTurn){
                 if (!attack(field.x, field.y, attackFields)){
                     turnManager.myTurn = false;
+                }else {
+                    defenseScore++;
                 }
             }
         })
-
+        field.element.innerHTML = field.x + " " + field.y;
         attackBoard.appendChild(field.element);
     }
 }
@@ -242,7 +244,7 @@ function checkSpaces(ship, x, y, fields) {
     for (let i = startX; i < endX; i++) {
         for (let j = startY; j < endY; j++) {
             if (fields[i * 10 + j].ship != null) {
-                if (fields[i * 10 + j].ship != ship) {
+                if (fields[i * 10 + j].ship !== ship) {
                     return false;
                     console.log("space is occupied or too close to another ship");
                 }
@@ -257,20 +259,20 @@ function checkSpaces(ship, x, y, fields) {
 function removeShip(ship, fields){
     console.log("start removing ship", ship);
     let i = 0;
-    while (i < fields.length && fields[i].ship != ship) {
-        i++;
-    }
-    if (i < fields.length){
-        for (let j = i; j < i + ship.length; j++) {
-            fields[j].ship = null;
-            fields[j].element.classList.remove("ship-body");
-            fields[j].element.classList.remove("ship-end");
-            fields[j].element.classList.remove("ship-color-default");
-            fields[j].element.classList.add("field");
-            console.log("succesfully removed ship", ship, "from fields:", fields[j]);
+    for (let field of fields){
+        if (field.ship == ship){
+            field.ship = null;
+            field.element.classList.remove("ship-body");
+            field.element.classList.remove("ship-end");
+            field.element.classList.remove("ship-color-default");
+            field.element.classList.add("field");
+            console.log("succesfully removed ship", ship, "from fields:", field);
+            i++;
         }
     }
-    console.log("ship not found in fields");
+    if (i != ship.length){
+        console.log("ship not found in fields");
+    }
 }
 
 function getRandomInt(max) {
@@ -344,6 +346,10 @@ function placeShip( field, selectedShip, fields, visible){
 }
 
 function placeShipRandom(){
+    for (let ship of ownFleetOfShips){
+        removeShip(ship, defenseFields);
+    }
+
     if (!started){
         for (let ship of ownFleetOfShips) {
             let x = getRandomInt(10);

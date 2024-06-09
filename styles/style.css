@@ -133,7 +133,7 @@ body {
     background-color: var(--metallic-grey);
 }
 .ship-color-hit{
-    background-color: red;
+    background-color: red !important;
 }
 
 
