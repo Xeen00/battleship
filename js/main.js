@@ -18,6 +18,24 @@ class Ship {
     }
 }
 
+class TurnManager {
+    constructor() {
+        this._myTurn = true;
+    }
+
+    get myTurn() {
+        return this._myTurn;
+    }
+
+    set myTurn(value) {
+        this._myTurn = value;
+        if (!this._myTurn) {
+            console.log("enemy turn getAttacked");
+            getAttacked();
+        }
+    }
+}
+
 const ownFleetOfShips= [new Ship(document.createElement("div"), 1, "S1"),
     new Ship(document.createElement("div"), 2, " S2"),
     new Ship(document.createElement("div"), 3, " S3"),
@@ -39,7 +57,7 @@ const base = document.getElementById("shipbase");
 
 let winScore = 0;
 let started = false;
-let myTurn = true;
+let turnManager = new TurnManager();
 let defenseScore = 0;
 let attackScore = 0;
 
@@ -52,18 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeShips();
     initializeEnemyShips();
 
-    checkTurnPlayed();
-});
-
-async function checkTurnPlayed() {
-    while (!await started && !await !myTurn) {
-        await new Promise(resolve => setTimeout(resolve, 1000));
-    }
-}
-
-checkTurnPlayed().then(() => {
-    console.log("Condition met!");
-    myTurn = true;
     checkTurnPlayed();
 });
 
@@ -137,11 +143,9 @@ function initializeAttackBoard(){
         field.element.classList.add("field");
         field.element.addEventListener("mousedown", function (event) {
             event.preventDefault();
-            if (myTurn){
-                if (attack(field.x, field.y, attackFields)){
-                    myTurn = true;
-                }else {
-                    myTurn = false;
+            if (turnManager.myTurn){
+                if (!attack(field.x, field.y, attackFields)){
+                    turnManager.myTurn = false;
                 }
             }
         })
@@ -274,15 +278,14 @@ function getRandomInt(max) {
 function getAttacked(){
     let x, y;
     do {
-        x = getRandomInt(10);
-        y = getRandomInt(10);
-    }while (!defenseFields[x * 10 + y].hit);
+        x = getRandomInt(9);
+        y = getRandomInt(9);
+    }while (defenseFields[x * 10 + y].hit);
     console.log("get attacked on field:", x, y, defenseFields[x * 10 + y]);
     if (attack(x, y, defenseFields)){
-        if (attack(x, y -1, defenseFields)){
-
-        }
+        getAttacked();
     }
+    turnManager.myTurn = true;
     updateScoreBoard();
 }
 
