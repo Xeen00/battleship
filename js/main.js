@@ -15,6 +15,8 @@ class Ship {
         this.length = length;
         this.orientation = "horizontal";
         this.name = name;
+        this.hit = false;
+        this.sunk = false;
     }
 }
 
@@ -69,8 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initializeShips();
     initializeEnemyShips();
-
-    checkTurnPlayed();
 });
 
 function gameLoop() {
@@ -98,6 +98,7 @@ function updateScoreBoard(){
 }
 
 function startGame(){
+    fixShips();
     console.log("start game");
     started = true;
 }
@@ -125,6 +126,7 @@ function initializeDefenseBoard(){
 
     for(let field of defenseFields) {
         field.element.classList.add("field");
+        field.element.innerHTML = field.x + " " + field.y;
         defenseBoard.appendChild(field.element);
     }
 }
@@ -181,7 +183,7 @@ function initializeEnemyShips(){
         while (checkSpaces(ship, x, y, attackFields) == false) {
             x = getRandomInt(10);
             y = getRandomInt(10);
-            field = attackFields[x * 10 + y];
+            field = attackFields[y * 10 + x];
         }
         console.log(field);
         placeShip(field, ship, attackFields, false);
@@ -234,8 +236,8 @@ function checkSpaces(ship, x, y, fields) {
     let startX = x - 1 < 0 ? 0 : x - 1;
     let startY = y - 1 < 0 ? 0 : y - 1;
 
-    let endX = x + 1;
-    let endY = y + size + 1;
+    let endX = x + 1 > 9 ? 9 : x + 1
+    let endY = y + size + 1 > 9 ? 9 : y + size + 1;
 
     for (let i = startX; i < endX; i++) {
         for (let j = startY; j < endY; j++) {
@@ -278,11 +280,12 @@ function getRandomInt(max) {
 function getAttacked(){
     let x, y;
     do {
-        x = getRandomInt(9);
-        y = getRandomInt(9);
+        x = getRandomInt(10);
+        y = getRandomInt(10);
     }while (defenseFields[x * 10 + y].hit);
     console.log("get attacked on field:", x, y, defenseFields[x * 10 + y]);
     if (attack(x, y, defenseFields)){
+        attackScore++;
         getAttacked();
     }
     turnManager.myTurn = true;
@@ -296,9 +299,10 @@ function attack(x, y, fields){
             field.hit = true;
             if (field.ship != null) {
                 console.log("hit");
+                field.ship.hit = true;
+                field.ship.sunk = isSunk(field.ship);
                 field.element.classList.add("ship-color-hit");
                 field.element.classList.remove("ship-color-default");
-                attackScore++;
                 return true;
             } else {
                 console.log("miss");
@@ -342,8 +346,8 @@ function placeShip( field, selectedShip, fields, visible){
 function placeShipRandom(){
     if (!started){
         for (let ship of ownFleetOfShips) {
-            let x = getRandomInt(9);
-            let y = getRandomInt(9);
+            let x = getRandomInt(10);
+            let y = getRandomInt(10);
             let field = defenseFields[x * 10 + y];
             console.log("start random placing ship:", ship, "on the field:", field);
             while (checkSpaces(ship, x, y, defenseFields) == false) {
@@ -358,7 +362,6 @@ function placeShipRandom(){
     }
 }
 
-
 function updateProgressBar() {
     const progressBarEnemy = document.getElementById('progressBarEnemy');
     progressBarEnemy.style.width = ((defenseScore / winScore) * 100) + '%';
@@ -366,4 +369,13 @@ function updateProgressBar() {
     const progressBarYou = document.getElementById('progressBarYou');
     progressBarYou.style.width = ((attackScore / winScore) * 100) + '%';
     progressBarYou.textContent = attackScore + "/" + winScore
+}
+
+function isSunk(ship){
+    for (let field of defenseFields){
+        if (field.ship == ship && !field.hit){
+            return false;
+        }
+    }
+    return true;
 }
