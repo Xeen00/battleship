@@ -255,5 +255,15 @@ body {
     background-color: var(--light-vibrant-red);
     text-align: center;
     line-height: 30px;
+}
 
+.popover {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 30px;
+    padding: 50px;
+    background: radial-gradient(circle, var(--light-vibrant-red), var(--light-rich-orange));;
+    display: none;
+    backdrop-filter: blur(3px);
 }

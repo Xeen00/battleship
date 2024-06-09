@@ -64,7 +64,7 @@ let defenseScore = 0;
 let attackScore = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
-    updateScoreBoard();
+    updateGame();
 
     initializeDefenseBoard();
     initializeAttackBoard();
@@ -73,11 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeEnemyShips();
 });
 
-function gameLoop() {
-    while (true){
-        console.log(started);
-    }
-}
 
 function calculateWinScore(){
     winScore = 0;
@@ -92,9 +87,11 @@ function fixShips(){
     }
 }
 
-function updateScoreBoard(){
+function updateGame(){
+    calculateWinScore();
     calculateWinScore();
     updateProgressBar();
+    showPopover(checkGameOver());
 }
 
 function startGame(){
@@ -103,16 +100,13 @@ function startGame(){
     started = true;
 }
 
-
 function checkGameOver(){
     if (defenseScore == winScore){
-        console.log("game over, you won");
-        return true;
+        return 1;
     }else if (attackScore == winScore){
-        console.log("game over, you lost");
-        return true;
+        return -1;
     }
-    return false;
+    return 0;
 }
 
 function initializeDefenseBoard(){
@@ -291,7 +285,7 @@ function getAttacked(){
         getAttacked();
     }
     turnManager.myTurn = true;
-    updateScoreBoard();
+    updateGame();
 }
 
 function attack(x, y, fields){
@@ -305,15 +299,16 @@ function attack(x, y, fields){
                 field.ship.sunk = isSunk(field.ship);
                 field.element.classList.add("ship-color-hit");
                 field.element.classList.remove("ship-color-default");
+                updateGame();
                 return true;
             } else {
                 console.log("miss");
                 field.element.style.backgroundColor = "blue";
+                updateGame();
                 return false;
             }
         }
     }
-    updateScoreBoard();
 }
 
 function placeShip( field, selectedShip, fields, visible){
@@ -384,4 +379,22 @@ function isSunk(ship){
         }
     }
     return true;
+}
+
+function showPopover(value) {
+    const popover = document.getElementById('popover');
+
+    switch(value) {
+        case 1:
+            popover.innerText = 'You won!';
+            break;
+        case -1:
+            popover.innerText = 'You lost!';
+            break;
+        default:
+            popover.innerText = '';
+            popover.style.display = 'none';
+            return;
+    }
+    popover.style.display = 'block';
 }
