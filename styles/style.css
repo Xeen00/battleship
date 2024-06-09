@@ -188,10 +188,12 @@ body {
     right: 20px;
     position: fixed;
     margin: 20px auto;
-    background: linear-gradient(to right, var(--emerald-green) 0%, var(--light-emerald-green) 100%);
+    background: linear-gradient(45deg, var(--emerald-green), var(--light-emerald-green));
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
+    border-color: var(--light-text);
+    border-width: 1px;
 }
 
 .header h1 {
