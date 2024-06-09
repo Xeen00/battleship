@@ -349,7 +349,7 @@ function placeShipRandom(){
             let y = getRandomInt(9);
             let field = defenseFields[x * 10 + y];
             console.log("start random placing ship:", ship, "on the field:", field);
-            while (checkSpaces(ship, x, y, defenseFields) === false) {
+            while (checkSpaces(ship, x, y, defenseFields) == false) {
                 x = getRandomInt(10);
                 y = getRandomInt(10);
                 field = defenseFields[x * 10 + y];

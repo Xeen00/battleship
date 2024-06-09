@@ -193,7 +193,6 @@ body {
     bottom: 20px;
     right: 20px;
     position: fixed;
-    margin: 20px auto;
     background: linear-gradient(45deg, var(--emerald-green), var(--light-emerald-green));
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
