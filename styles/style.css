@@ -132,8 +132,16 @@ body {
 .ship-color-default {
     background-color: var(--metallic-grey);
 }
-.ship-color-hit{
-    background-color: red !important;
+@keyframes combinedEffect {
+    0% { transform: scale(1); background-color: var(--metallic-grey); }
+    25% { transform: scale(1.1); background-color: white; }
+    50% { transform: scale(1.05); background-color: red; }
+    75% { transform: scale(1.1); background-color: white; }
+    100% { transform: scale(1); background-color: red; }
+}
+
+.ship-color-hit {
+    animation: combinedEffect 1s forwards, shake 0.8s forwards;
 }
 
 

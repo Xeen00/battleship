@@ -120,7 +120,7 @@ function initializeDefenseBoard(){
 
     for(let field of defenseFields) {
         field.element.classList.add("field");
-        field.element.innerHTML = field.x + " " + field.y;
+        //field.element.innerHTML = field.x + " " + field.y;
         defenseBoard.appendChild(field.element);
     }
 }
@@ -147,7 +147,7 @@ function initializeAttackBoard(){
                 }
             }
         })
-        field.element.innerHTML = field.x + " " + field.y;
+        //field.element.innerHTML = field.x + " " + field.y;
         attackBoard.appendChild(field.element);
     }
 }
