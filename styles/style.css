@@ -74,15 +74,6 @@ body {
     margin-top: 20px;
 }
 
-.field {
-    background-color: var(--light-ocean-water);
-    color: var(--light-text);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 20px;
-}
-
 
 #defense-score, #attack-score {
     font-size: 20px;
@@ -127,4 +118,43 @@ body {
 }
 .ship-color-hit{
     background-color: red;
+}
+
+
+.field {
+    width: 60px;
+    height: 60px;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    background: var(--light-ocean-water);
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.field:active:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    animation: ripple-effect 0.2s ease-out;
+}
+
+@keyframes ripple-effect {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(4);
+        opacity: 0;
+    }
 }

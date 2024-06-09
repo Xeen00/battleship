@@ -148,6 +148,7 @@ function initializeAttackBoard(){
                 }
             }
         })
+
         attackBoard.appendChild(field.element);
     }
 }
@@ -355,3 +356,16 @@ function placeShipRandom(){
         console.log("game already started");
     }
 }
+
+document.getElementById('field').addEventListener('click', function(e) {
+    var x = e.clientX - e.target.offsetLeft;
+    var y = e.clientY - e.target.offsetTop;
+    var ripple = document.createElement('span');
+    ripple.style.left = x + 'px';
+    ripple.style.top = y + 'px';
+    ripple.classList.add('ripple');
+    this.appendChild(ripple);
+    setTimeout(() => {
+        ripple.remove();
+    }, 1000);
+});
