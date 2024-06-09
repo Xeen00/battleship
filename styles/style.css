@@ -6,6 +6,7 @@
     --light-grey: #CCCCCC;
     --rich-orange: #F77F00;
     --emerald-green: #2D6A4F;
+    --ocean-water: #6699CC;
 
     --light-dark-navy: #336699;
     --light-metallic-grey: #7A8B99;
@@ -13,7 +14,8 @@
     --light-light-grey: #E0E0E0;
     --light-rich-orange: #FFA040;
     --light-emerald-green: #5A8A67;
-    --light-ocean-water: #6699CC;
+    --light-ocean-water: #77AACC;
+
     --light-text: #F0F0F0;
 }
 
@@ -109,7 +111,7 @@ body {
 .ship-end{
     width: 60px;
     height: 60px;
-    background-color: var(--light-ocean-water);
+    background-color: var(--ocean-water);
     position: relative;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
@@ -140,7 +142,7 @@ body {
     position: relative;
     overflow: hidden;
     display: inline-block;
-    background: var(--light-ocean-water);
+    background: var(--ocean-water);
     color: white;
     text-align: center;
     border-radius: 5px;
@@ -167,6 +169,10 @@ body {
 
 .field:active::after {
     animation: ripple-effect 0.5s 0.1s ease-out;
+}
+
+.field:hover {
+    background: var(--light-ocean-water);
 }
 
 @keyframes ripple-effect {
@@ -204,8 +210,7 @@ body {
 }
 
 .team {
-    display: flex;
-    justify-content: space-between;
+
     padding: 20px;
     align-items: center;
 }
@@ -235,15 +240,20 @@ body {
 }
 
 #progressBarContainer {
+    display: flex;
+    justify-content: left;
     width: 100%;
-    background-color: red;
+    background-color: var(--light-dark-navy);
+    border-radius: 5px;
 }
 
 #progressBarYou, #progressBarEnemy {
-    width: 90%;
+
+    width: 0%;
     height: 30px;
-    background-color: green;
+    background-color: var(--light-vibrant-red);
     text-align: center;
     line-height: 30px;
     color: white;
+    border-radius: 5px;
 }

@@ -38,13 +38,10 @@ const attackBoard = document.getElementById("attack-board");
 
 const base = document.getElementById("shipbase");
 
-const defenseScoreBoard = document.getElementById("defense-score");
-const attackScoreBoard = document.getElementById("attack-score");
-
 let winScore = 0;
 let started = false;
 let myTurn = true;
-let defenseScore = 10;
+let defenseScore = 0;
 let attackScore = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -83,8 +80,8 @@ function fixShips(){
 }
 
 function updateScoreBoard(){
-    defenseScoreBoard.innerHTML = attackScore;
-    attackScoreBoard.innerHTML = defenseScore;
+    calculateWinScore();
+
     updateProgressBar();
 }
 
@@ -368,8 +365,8 @@ function placeShipRandom(){
 function updateProgressBar() {
     const progressBarEnemy = document.getElementById('progressBarEnemy');
     progressBarEnemy.style.width = ((defenseScore / winScore) * 100) + '%';
-    progressBarEnemy.textContent = `${defenseScore}/25`;
+    progressBarEnemy.textContent = defenseScore + "/" + winScore;
     const progressBarYou = document.getElementById('progressBarYou');
     progressBarYou.style.width = ((attackScore / winScore) * 100) + '%';
-    progressBarYou.textContent = `${attackScore}/25`;
+    progressBarYou.textContent = attackScore + "/" + winScore
 }
