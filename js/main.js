@@ -16,7 +16,6 @@ class Ship {
         this.orientation = "horizontal";
         this.name = name;
     }
-
 }
 
 const ownFleetOfShips= [new Ship(document.createElement("div"), 1, "S1"),
@@ -46,13 +45,33 @@ let attackScore = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
     updateScoreBoard();
+
     initializeDefenseBoard();
     initializeAttackBoard();
+
     initializeShips();
     initializeEnemyShips();
-    calculateWinScore();
-    gameLoop();
+
+    checkTurnPlayed();
 });
+
+async function checkTurnPlayed() {
+    while (!await started && !await !myTurn) {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+}
+
+checkTurnPlayed().then(() => {
+    console.log("Condition met!");
+    myTurn = true;
+    checkTurnPlayed();
+});
+
+function gameLoop() {
+    while (true){
+        console.log(started);
+    }
+}
 
 function calculateWinScore(){
     winScore = 0;
@@ -69,30 +88,14 @@ function fixShips(){
 
 function updateScoreBoard(){
     calculateWinScore();
-
     updateProgressBar();
 }
 
-function gameLoop() {
-    if (!started) {
-        console.log("Waiting to start the game");
-    } else if (!checkGameOver()) {
-        console.log("game loop make move");
-        makeMove();
-        console.log("game loop get attacked");
-        getAttacked();
-        console.log("game loop update score board");
-        setTimeout(gameLoop, 1000);
-        requestAnimationFrame(gameLoop);
-    }
+function startGame(){
+    console.log("start game");
+    started = true;
 }
 
-function makeMove(){
-    while (myTurn){
-        console.log("my turn");
-    }
-    getAttacked();
-}
 
 function checkGameOver(){
     if (defenseScore == winScore){
