@@ -1,3 +1,4 @@
+"use strict";
 class Field {
     constructor(element, x, y) {
         this.element = element;
@@ -75,7 +76,7 @@ function calculateWinScore(){
 }
 
 function fixShips(){
-    for(ship of ownFleetOfShips){
+    for(let ship of ownFleetOfShips){
         ship.element.setAttribute("draggable", "false");
     }
 }
@@ -275,9 +276,10 @@ function getRandomInt(max) {
 }
 
 function getAttacked(){
+    let x, y;
     do {
-        let x = getRandomInt(10);
-        let y = getRandomInt(10);
+        x = getRandomInt(10);
+        y = getRandomInt(10);
     }while (!defenseFields[x * 10 + y].hit);
     console.log("get attacked on field:", x, y, defenseFields[x * 10 + y]);
     if (attack(x, y, defenseFields)){
@@ -293,7 +295,7 @@ function makeMove(){
 }
 
 function attack(x, y, fields){
-    field = fields[x * 10 + y];
+    let field = fields[x * 10 + y];
     if (started){
         if (!field.hit) {
             field.hit = true;
@@ -322,7 +324,7 @@ function placeShip( field, selectedShip, fields, visible){
         field.element.appendChild(selectedShip.element);
         let counter = 1;
         for (let i = field.y; i < field.y + selectedShip.length; i++) {
-            currentField = fields[field.x * 10 + i];
+            let currentField = fields[field.x * 10 + i];
             currentField.ship = selectedShip;
             if (visible & selectedShip.length > 1){
                 if (counter == selectedShip.length){
