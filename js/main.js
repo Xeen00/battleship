@@ -54,18 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
     gameLoop();
 });
 
-function startGame(){
-    if (!started && base.children.length == 0){
-        started = true;
-        fixShips();
-        console.log("start game");
-    }else if (started) {
-        console.log("already started");
-    }else {
-        console.log("place all ships");
-    }
-}
-
 function calculateWinScore(){
     winScore = 0;
     for (let ship of enemyFleetOfShips) {
@@ -97,6 +85,13 @@ function gameLoop() {
         setTimeout(gameLoop, 1000);
         requestAnimationFrame(gameLoop);
     }
+}
+
+function makeMove(){
+    while (myTurn){
+        console.log("my turn");
+    }
+    getAttacked();
 }
 
 function checkGameOver(){
@@ -286,10 +281,6 @@ function getAttacked(){
         }
     }
     updateScoreBoard();
-}
-
-function makeMove(){
-
 }
 
 function attack(x, y, fields){

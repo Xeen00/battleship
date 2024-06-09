@@ -91,6 +91,7 @@ body {
     justify-content: left;
     height: 60px;
     border-radius: 5px;
+    margin: 1px;
 }
 
 .ship-body{
@@ -193,9 +194,9 @@ body {
     bottom: 20px;
     right: 20px;
     position: fixed;
+    box-shadow: 4px 4px 4px lightgrey;
     background: linear-gradient(45deg, var(--emerald-green), var(--light-emerald-green));
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
     border-color: var(--light-text);
     border-width: 1px;
@@ -243,6 +244,7 @@ body {
     justify-content: left;
     width: 100%;
     background-color: var(--light-dark-navy);
+    border: solid 0.1px var(--light-text);
     border-radius: 5px;
 }
 
@@ -253,6 +255,5 @@ body {
     background-color: var(--light-vibrant-red);
     text-align: center;
     line-height: 30px;
-    color: white;
-    border-radius: 5px;
+
 }
