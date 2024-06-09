@@ -232,21 +232,18 @@ function checkSpaces(ship, x, y, fields) {
     let startX = x - 1 < 0 ? 0 : x - 1;
     let startY = y - 1 < 0 ? 0 : y - 1;
 
-    let endX = x + 1 > 9 ? 9 : x + 1
-    let endY = y + size + 1 > 9 ? 9 : y + size + 1;
+    let endX = x + 1 > 9 ? 9 : x + 1;
+    let endY = y + size > 10 ? 10 : y + size + 1;
 
-    for (let i = startX; i < endX; i++) {
-        for (let j = startY; j < endY; j++) {
+    for (let i = startX; i <= endX; i++) {
+        for (let j = startY; j <= endY; j++) {
             if (fields[i * 10 + j].ship != null) {
                 if (fields[i * 10 + j].ship !== ship) {
                     return false;
-                    console.log("space is occupied or too close to another ship");
                 }
             }
         }
     }
-
-    console.log("space is free");
     return true;
 }
 
@@ -351,7 +348,7 @@ function placeShipRandom(){
             let y = getRandomInt(10);
             let field = defenseFields[x * 10 + y];
             console.log("start random placing ship:", ship, "on the field:", field);
-            while (checkSpaces(ship, x, y, defenseFields) == false) {
+            while (!checkSpaces(ship, x, y, defenseFields)) {
                 x = getRandomInt(10);
                 y = getRandomInt(10);
                 field = defenseFields[x * 10 + y];
