@@ -14,16 +14,28 @@
             <button id="log-game" onclick="logGame()">Log Game</button>
             <button id="place-ship-random" onclick="placeShipRandom()">Place Ship Randomly</button>
         </div>
+        <div class="scoreboard">
+            <div class="header">
+                <h1>Game Scoreboard</h1>
+            </div>
+            <div class="team">
+                <h2 class="team-name">You</h2>
+                <div class="score">0</div>
+            </div>
+            <div class="team">
+                <h2 class="team-name">Enemy</h2>
+                <div class="score">0</div>
+            </div>
+        </div>
         <div class="main-container">
             <div class="center-container">
-                <h2>Defense Board</h2>
-                <span id="defense-score">Score: 0</span>
+
+                <h2>You</h2>
                 <div class="board-container" id="defense-board"></div>
                 <div id="shipbase" class="base"></div>
             </div>
             <div class="center-container">
-                <h2>Attack Board</h2>
-                <span id="attack-score">Score: 0</span>
+                <h2>Enemy</h2>
                 <div class="board-container" id="attack-board"></div>
             </div>
         </div>

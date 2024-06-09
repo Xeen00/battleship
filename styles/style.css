@@ -179,3 +179,55 @@ body {
         opacity: 0;
     }
 }
+
+.scoreboard {
+    color: var(--light-text);
+    width: 30%;
+    z-index: 1000;
+    bottom: 20px;
+    right: 20px;
+    position: fixed;
+    margin: 20px auto;
+    background: linear-gradient(to right, var(--emerald-green) 0%, var(--light-emerald-green) 100%);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.header h1 {
+    margin: 0;
+    padding: 10px 0;
+    font-size: 24px;
+    border-bottom: 2px solid #34495E;
+}
+
+.team {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    align-items: center;
+}
+
+.team-name {
+    margin: 0;
+    font-size: 20px;
+    flex-grow: 1;
+}
+
+.score {
+    background-color: var(--dark-navy);
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.info {
+    font-size: 16px;
+    padding: 10px;
+
+}
+
+.info p {
+    margin: 5px;
+}
