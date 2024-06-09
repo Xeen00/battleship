@@ -89,7 +89,6 @@ function updateScoreBoard(){
 function gameLoop() {
     if (!started) {
         console.log("Waiting to start the game");
-        requestAnimationFrame(gameLoop);
     } else if (!checkGameOver()) {
         console.log("game loop make move");
         makeMove();

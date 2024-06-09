@@ -2,7 +2,8 @@
 
 console.log("script loaded");
 
-let field = document.getElementsByClassName("field");
+let fields = [];
+let board = document.getElementById("board");
 let currentPlayer = 1;
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -12,13 +13,23 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function setupGame() {
-    for (let f of field){
-        f.addEventListener("click", function(){
-            console.log("clicked");
-            f.style.backgroundColor = "red";
-        });
+    for (let i = 0; i < 9; i++) {
+        let field = document.createElement("div");
+        field.classList.add("field");
+        field.dataset.index = i;
+        field.onclick = () => handleCellClick(i);
+        board.appendChild(field);
     }
-    console.log("Game setup complete.");
+    console.log("Game setup complete");
+}
+
+function handleCellClick(index) {
+    console.log("cell clicked", index);
+    if (fields[index] == 2) {
+
+    }else {
+        switchPlayer();
+    }
 }
 
 function switchPlayer() {
