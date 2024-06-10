@@ -52,6 +52,8 @@ const enemyFleetOfShips = [new Ship(document.createElement("div"), 1, "ship1"),
 let defenseFields = [];
 let attackFields = [];
 
+let lastHitX, lastHitY, firstHitX, firstHitY, lastHitShip, lastHitOrientation;
+
 const defenseBoard = document.getElementById("defense-board");
 const attackBoard = document.getElementById("attack-board");
 
@@ -276,10 +278,26 @@ function getAttacked(){
         x = getRandomInt(10);
         y = getRandomInt(10);
     }while (defenseFields[x * 10 + y].hit);
-    console.log("get attacked on field:", x, y, defenseFields[x * 10 + y]);
-    if (attack(x, y, defenseFields)){
-        attackScore++;
-        getAttacked();
+    if (lastHitShip != null && !lastHitShip.sunk){
+        if (lastHitY + 1 < 10){
+            if (attack(lastHitX, lastHitY + 1, defenseFields)){
+                lastHitY = lastHitY + 1;
+            }
+        }else if (lastHitY - 1 >= 0){
+            if (attack(lastHitY - 1, defenseFields)){
+                lastHitY = lastHitY - 1;
+            }
+        }
+
+    }else {
+        console.log("get attacked on field:", x, y, defenseFields[x * 10 + y]);
+        if (attack(x, y, defenseFields)){
+            attackScore++;
+            firstHitX = x;
+            firstHitY = y;
+            lastHitShip = defenseFields[x * 10 + y].ship;
+            getAttacked();
+        }
     }
     turnManager.myTurn = true;
     updateGame();
