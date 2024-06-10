@@ -26,8 +26,10 @@ body {
 }
 
 .sticky-bar {
-    display: grid;
-    grid-template-columns: 1fr;
+    height: 260px;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-content: center;
     align-items: center;
@@ -36,6 +38,15 @@ body {
     background: var(--dark-navy);
     color: var(--light-text);
     z-index: 1000;
+}
+
+.sticky-bar h1{
+    font-size: 40px;
+    margin: 0;
+}
+
+.sticky-bar p{
+    margin: 5px;
 }
 
 
@@ -64,6 +75,7 @@ body {
 }
 
 .main-container {
+    padding-top: 280px;
     display: flex;
     justify-content: center;
     margin-top: 20px;
@@ -210,10 +222,11 @@ body {
 }
 
 .scoreboard {
+    align-self: center;
+    display: flex;
     width: 800px;
     margin: 10px;
     color: var(--light-text);
-    display: flex;
     justify-content: space-between;
     background: linear-gradient(45deg, var(--emerald-green), var(--light-emerald-green));
     border-radius: 10px;
@@ -222,16 +235,11 @@ body {
     border-width: 1px;
 }
 
-.header h1 {
-    margin: 0;
-    padding: 10px 0;
-    font-size: 24px;
-    border-bottom: 2px solid #34495E;
-}
-
 .team {
-
+    display: grid;
+    justify-content: center;
     padding: 20px;
+    width: 50%;
     align-items: center;
 }
 
@@ -262,10 +270,14 @@ body {
 #progressBarContainer {
     display: flex;
     justify-content: left;
-    width: 300px;
+    width: 350px;
     background-color: var(--light-dark-navy);
     border: solid 0.1px var(--light-text);
     border-radius: 5px;
+}
+
+#progressBarContainer::hover {
+
 }
 
 #progressBarYou, #progressBarEnemy {
