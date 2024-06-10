@@ -19,7 +19,17 @@
     --light-text: #F0F0F0;
 }
 
+
+html {
+    scroll-snap-type: y proximity;
+    overflow-y: scroll;
+    height: 100%;
+}
+
 body {
+    scroll-snap-align: start;
+    margin: 0;
+    height: 100%;
     font-family: Helvetica, sans-serif;
     background: var(--light-light-grey);
     text-align: center;

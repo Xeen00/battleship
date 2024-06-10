@@ -78,6 +78,15 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeEnemyShips();
 });
 
+window.addEventListener('scroll', function() {
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    if (scrollTop < 100) {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+});
 
 function calculateWinScore(){
     winScore = 0;
@@ -177,15 +186,13 @@ function initializeEnemyShips(){
     console.log("start initializing enemy ships");
     for (let ship of enemyFleetOfShips) {
         console.log("start initialized enemy ship: ", ship);
-        let x = getRandomInt(10);
-        let y = getRandomInt(10);
-        let field = attackFields[x * 10 + y];
+        let x, y, field;
         console.log("try on field:", field);
-        while (checkSpaces(ship, x, y, attackFields) == false) {
+        do {
             x = getRandomInt(10);
             y = getRandomInt(10);
             field = attackFields[y * 10 + x];
-        }
+        } while (!checkSpaces(ship, x, y, attackFields))
         console.log(field);
         placeShip(field, ship, attackFields, false);
         console.log("finished initialized ship: ", ship);
