@@ -43,11 +43,11 @@ const ownFleetOfShips= [new Ship(document.createElement("div"), 1, "S1"),
     new Ship(document.createElement("div"), 3, " S3"),
     new Ship(document.createElement("div"), 4, "S4"),
     new Ship(document.createElement("div"), 5, " S5")];
-const enemyFleetOfShips = [new Ship(document.createElement("div"), 1, "ship1"),
-    new Ship(document.createElement("div"), 2, "ship2"),
-    new Ship(document.createElement("div"), 3, "ship3"),
-    new Ship(document.createElement("div"), 4, "ship4"),
-    new Ship(document.createElement("div"), 5, "ship5")];
+const enemyFleetOfShips = [new Ship(document.createElement("div"), 1, "S1"),
+    new Ship(document.createElement("div"), 2, " S2"),
+    new Ship(document.createElement("div"), 3, " S3"),
+    new Ship(document.createElement("div"), 4, "S4"),
+    new Ship(document.createElement("div"), 5, " S5")];
 
 let defenseFields = [];
 let attackFields = [];
@@ -183,6 +183,7 @@ function logGame(){
 }
 
 function initializeEnemyShips(){
+    console.log("enemyFleet:", enemyFleetOfShips);
     let  loopProtection = 0;
     console.log("start initializing enemy ships");
     for (let ship of enemyFleetOfShips) {
@@ -366,7 +367,7 @@ function attack(x, y, fields){
 function placeShip( field, selectedShip, fields, visible){
     console.log("!INFUNCTION trying to place:", selectedShip, "on the field:", field);
 
-    if (field.ship == null && checkSpaces(selectedShip, field.x, field.y, fields)){
+    if (field.ship === null && checkSpaces(selectedShip, field.x, field.y, fields)){
         console.log("field is ready for placement")
         removeShip(selectedShip, fields);
         console.log(selectedShip.element);
