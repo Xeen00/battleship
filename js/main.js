@@ -172,10 +172,10 @@ function restartGame(){
 
 function logGame(){
     for (let field of attackFields) {
-        console.log("attack board:", field);
+        console.log("attack board:", field, field.ship);
     }
     for (let field of defenseFields) {
-        console.log("defense board", field);
+        console.log("defense board", field, field.ship);
     }
     for (let ship of ownFleetOfShips) {
         console.log("base fleet board", ship);
@@ -183,19 +183,23 @@ function logGame(){
 }
 
 function initializeEnemyShips(){
+    let  loopProtection = 0;
     console.log("start initializing enemy ships");
     for (let ship of enemyFleetOfShips) {
         console.log("start initialized enemy ship: ", ship);
-        let x, y, field;
-        console.log("try on field:", field);
+        let x, y, selectedField;
+        console.log("try on field:", selectedField);
         do {
             x = getRandomInt(10);
             y = getRandomInt(10);
-            field = attackFields[y * 10 + x];
-        } while (!checkSpaces(ship, x, y, attackFields))
-        console.log(field);
-        placeShip(field, ship, attackFields, false);
-        console.log("finished initialized ship: ", ship);
+            selectedField = attackFields[y * 10 + x];
+            loopProtection++;
+            if (loopProtection > 1000){
+                console.log("loop protection");
+                break;
+            }
+        } while (!placeShip(selectedField, ship, attackFields, true));
+        console.log("ENEMY!!!!!! finished initialized ship: ", ship, "on the field:", selectedField);
     }
     console.log("finished initializing enemy ships");
 }
@@ -362,9 +366,10 @@ function attack(x, y, fields){
 function placeShip( field, selectedShip, fields, visible){
     console.log("!INFUNCTION trying to place:", selectedShip, "on the field:", field);
 
-    if (field.ship === null && checkSpaces(selectedShip, field.x, field.y, fields)){
+    if (field.ship == null && checkSpaces(selectedShip, field.x, field.y, fields)){
         console.log("field is ready for placement")
         removeShip(selectedShip, fields);
+        console.log(selectedShip.element);
         field.element.appendChild(selectedShip.element);
         let counter = 1;
         for (let i = field.y; i < field.y + selectedShip.length; i++) {
