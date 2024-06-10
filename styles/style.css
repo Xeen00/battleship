@@ -25,6 +25,20 @@ body {
     text-align: center;
 }
 
+.sticky-bar {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+
+    width: 100%;
+    background: var(--dark-navy);
+    color: var(--light-text);
+    z-index: 1000;
+}
+
+
 .game-controls button {
     padding: 10px 20px;
     font-size: 16px;
@@ -196,13 +210,11 @@ body {
 }
 
 .scoreboard {
+    width: 800px;
+    margin: 10px;
     color: var(--light-text);
-    width: 30%;
-    z-index: 1000;
-    bottom: 20px;
-    right: 20px;
-    position: fixed;
-    box-shadow: 4px 4px 4px lightgrey;
+    display: flex;
+    justify-content: space-between;
     background: linear-gradient(45deg, var(--emerald-green), var(--light-emerald-green));
     border-radius: 10px;
     text-align: center;
@@ -250,7 +262,7 @@ body {
 #progressBarContainer {
     display: flex;
     justify-content: left;
-    width: 100%;
+    width: 300px;
     background-color: var(--light-dark-navy);
     border: solid 0.1px var(--light-text);
     border-radius: 5px;
