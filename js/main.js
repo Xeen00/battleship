@@ -54,6 +54,7 @@ let attackFields = [];
 
 let lastHitX, lastHitY;
 let lastHitOn;
+let lastHitSuccess;
 let lastHitShip = null;
 
 const defenseBoard = document.getElementById("defense-board");
@@ -285,8 +286,11 @@ function getAttacked() {
                 if (attack(lastHitX, lastHitY + 1, defenseFields)) {
                     console.log("smart hit on", lastHitY + 1);
                     lastHitY += 1;
+                    lastHitOn = "+";
                     attackScore++;
                     return getAttacked();
+                }else {
+                    lastHitOn = "-";
                 }
             }
         } else if (lastHitOn === "-") {
@@ -294,8 +298,11 @@ function getAttacked() {
                 if (attack(lastHitX, lastHitY - 1, defenseFields)) {
                     console.log("smart hit on", lastHitY - 1);
                     lastHitY -= 1;
+                    lastHitOn = "-";
                     attackScore++;
                     return getAttacked();
+                }else {
+                    lastHitOn = "+";
                 }
             }
         }
@@ -313,8 +320,8 @@ function getAttacked() {
             lastHitX = x;
             lastHitY = y;
             lastHitShip = defenseFields[x * 10 + y].ship;
-            lastHitOn = "+";
             attackScore++;
+            lastHitOn = "+";
             getAttacked();
         }
     }
@@ -412,6 +419,8 @@ function isSunk(ship){
             return false;
         }
     }
+    ship.element.style.backgroundColor = "red";
+    ship.element.style.zIndex = 2001;
     return true;
 }
 
