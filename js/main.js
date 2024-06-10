@@ -52,7 +52,9 @@ const enemyFleetOfShips = [new Ship(document.createElement("div"), 1, "ship1"),
 let defenseFields = [];
 let attackFields = [];
 
-let lastHitX, lastHitY, firstHitX, firstHitY, lastHitShip, lastHitOrientation;
+let lastHitX, lastHitY;
+let lastHitOn;
+let lastHitShip = null;
 
 const defenseBoard = document.getElementById("defense-board");
 const attackBoard = document.getElementById("attack-board");
@@ -272,30 +274,47 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
 
-function getAttacked(){
+function getAttacked() {
+    console.log("getting attacked");
     let x, y;
-    do {
-        x = getRandomInt(10);
-        y = getRandomInt(10);
-    }while (defenseFields[x * 10 + y].hit);
-    if (lastHitShip != null && !lastHitShip.sunk){
-        if (lastHitY + 1 < 10){
-            if (attack(lastHitX, lastHitY + 1, defenseFields)){
-                lastHitY = lastHitY + 1;
+
+    if (lastHitShip != null && !isSunk(lastHitShip)) {
+        console.log("smart attack");
+        if (lastHitOn === "+") {
+            if (lastHitY + 1 < 10 && !defenseFields[lastHitX * 10 + (lastHitY + 1)].hit) {
+                if (attack(lastHitX, lastHitY + 1, defenseFields)) {
+                    console.log("smart hit on", lastHitY + 1);
+                    lastHitY += 1;
+                    attackScore++;
+                    return getAttacked();
+                }
             }
-        }else if (lastHitY - 1 >= 0){
-            if (attack(lastHitY - 1, defenseFields)){
-                lastHitY = lastHitY - 1;
+        } else if (lastHitOn === "-") {
+            if (lastHitY - 1 >= 0 && !defenseFields[lastHitX * 10 + (lastHitY - 1)].hit) {
+                if (attack(lastHitX, lastHitY - 1, defenseFields)) {
+                    console.log("smart hit on", lastHitY - 1);
+                    lastHitY -= 1;
+                    attackScore++;
+                    return getAttacked();
+                }
             }
         }
+        lastHitShip = null;
+        return getAttacked();
+    } else {
+        do {
+            x = getRandomInt(10);
+            y = getRandomInt(10);
+        } while (defenseFields[x * 10 + y].hit);
 
-    }else {
-        console.log("get attacked on field:", x, y, defenseFields[x * 10 + y]);
-        if (attack(x, y, defenseFields)){
-            attackScore++;
-            firstHitX = x;
-            firstHitY = y;
+        console.log("attacking at", x, y);
+        if (attack(x, y, defenseFields)) {
+            console.log("hit at", x, y);
+            lastHitX = x;
+            lastHitY = y;
             lastHitShip = defenseFields[x * 10 + y].ship;
+            lastHitOn = "+";
+            attackScore++;
             getAttacked();
         }
     }
